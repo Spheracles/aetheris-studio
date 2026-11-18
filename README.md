@@ -36,3 +36,5 @@
 - `office-bg.webp`：景深模糊背景
 - `office-thumb.webp`：小地圖縮圖
 - `og.jpg`：社群分享預覽圖
+- `favicon.svg`、`favicon.ico`：分頁圖示（16／32／48）
+- `apple-touch-icon.png`、`icon-192.png`、`icon-512.png`、`site.webmanifest`：加到手機主畫面時使用的圖示與設定

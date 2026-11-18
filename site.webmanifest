@@ -1,0 +1,29 @@
+{
+  "name": "蒼穹創意科技工作坊 AethEr'Is",
+  "short_name": "蒼穹工作坊",
+  "description": "車用 AI 人才培訓專班期中成果：走進辦公室九個工作區的互動導覽",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080d1b",
+  "theme_color": "#080d1b",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

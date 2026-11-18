@@ -6,7 +6,11 @@
 <title>蒼穹創意科技工作坊</title>
 <meta name="description" content="蒼穹創意科技工作坊 AethEr'Is：車用 AI 人才培訓專班期中成果。走進辦公室九個工作區，逐站瀏覽 AI 學習旅程。">
 <meta name="theme-color" content="#080d1b">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%230a1124'/%3E%3Cpath d='M10 39 L24 10 L38 39' fill='none' stroke='%2386d8ff' stroke-width='3.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M5 31 C 15 23, 33 22, 44 27' fill='none' stroke='%23f3b867' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M33 6 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6z' fill='%23ffe2b0'/%3E%3C/svg%3E">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="蒼穹工作坊">
 <meta property="og:type" content="website">
 <meta property="og:title" content="蒼穹創意科技工作坊｜AI 學習旅程">
 <meta property="og:description" content="車用 AI 人才培訓專班・期中成果：走進辦公室九個工作區，逐站瀏覽兩個月的學習成果。">
@@ -84,7 +88,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;background:none;border:0;padding:0;cursor:pointer;text-align:left}
 .brand{transition:opacity .5s ease}
 .at-ov:not(.is-mobile) .brand{opacity:0;pointer-events:none}
-.brand svg{width:36px;height:36px;flex:none}
+.brand img{width:36px;height:36px;flex:none;display:block}
 .brand b{display:block;font:900 18px/1.15 var(--f-display);letter-spacing:.06em}
 .brand small{display:block;font:500 11px/1.3 var(--f-tech);letter-spacing:.12em;color:var(--muted)}
 .loc{justify-self:center;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);min-width:0}
@@ -364,12 +368,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 
   <header class="topbar">
     <button class="brand" type="button" id="brand" aria-label="回到入口全景">
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9f3ff"/><stop offset="1" stop-color="#86d8ff"/></linearGradient></defs>
-        <path d="M8 40 L24 8 L40 40" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-        <path d="M3 31 C 14 22, 34 21, 46 27" fill="none" stroke="#f3b867" stroke-width="2" stroke-linecap="round"/>
-        <path d="M33 5 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6z" fill="#ffe2b0"/>
-      </svg>
+      <img src="favicon.svg" width="36" height="36" alt="" style="border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 4px 14px rgba(0,0,0,.35)">
       <span><b>蒼穹創意科技工作坊</b><small>AethEr'Is — Creative Technology Studio</small></span>
     </button>
     <div class="loc" aria-live="polite"><span class="lbl">目前位置</span><span class="now" id="locNow"></span></div>
