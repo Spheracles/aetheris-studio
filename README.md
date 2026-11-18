@@ -32,7 +32,8 @@
 ## 檔案
 
 - `index.html`：整個網站（HTML、CSS、JavaScript 都在同一個檔案）
-- `office.webp`：辦公室場景圖（放大用的 2 倍版本）
+- `office.webp`：辦公室場景圖（放大用的 2 倍版本，九塊區域招牌已換成正確文字）
+- `signs.svg`：九塊區域招牌的向量檔，網站放大時用它疊在場景上，文字不會模糊
 - `office-bg.webp`：景深模糊背景
 - `office-thumb.webp`：小地圖縮圖
 - `og.jpg`：社群分享預覽圖
