@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>蒼穹創意科技工作坊</title>
+<meta name="description" content="蒼穹創意科技工作坊 AethEr'Is：車用 AI 人才培訓專班期中成果。走進辦公室九個工作區，逐站瀏覽 AI 學習旅程。">
+<meta name="theme-color" content="#080d1b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%230a1124'/%3E%3Cpath d='M10 39 L24 10 L38 39' fill='none' stroke='%2386d8ff' stroke-width='3.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M5 31 C 15 23, 33 22, 44 27' fill='none' stroke='%23f3b867' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M33 6 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6z' fill='%23ffe2b0'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="蒼穹創意科技工作坊｜AI 學習旅程">
+<meta property="og:description" content="車用 AI 人才培訓專班・期中成果：走進辦公室九個工作區，逐站瀏覽兩個月的學習成果。">
+<meta property="og:url" content="https://spheracles.github.io/aetheris-studio/">
+<meta property="og:image" content="https://spheracles.github.io/aetheris-studio/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="office-bg.webp">
+<link rel="preload" as="image" href="office.webp">
+<style>
+:root{
+  /* Layout: a full-bleed camera flies over the studio illustration; a glass dossier docks opposite the zone in focus, Prezi-style. */
+  --night:#080d1b;
+  --glass:rgba(10,17,36,.84);
+  --text:#eef1fb;
+  --muted:#a7b1cc;
+  --amber:#f3b867;
+  --holo:#86d8ff;
+  --leaf:#a3e2a8;
+  --line:rgba(188,208,255,.15);
+  --ok:#5fe0a6; --warn:#ffc34d; --alert:#ff6a5c;
+  --f-display:"Noto Serif TC","Noto Serif CJK TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-tech:"Chakra Petch","Noto Sans TC",ui-sans-serif,system-ui,sans-serif;
+  --top:68px; --bottom:92px; --pw:520px; --sheet-h:50%;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--night);color:var(--text);font-family:var(--f-body);font-size:15px;line-height:1.6;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+ol,ul{margin:0;padding:0;list-style:none}
+
+/* ---------- scene ---------- */
+.backdrop{position:fixed;inset:0;background:var(--night) url("office-bg.webp") center/cover no-repeat;filter:saturate(.9)}
+#viewport{position:fixed;inset:0;overflow:hidden;touch-action:pan-y}
+#stage{position:absolute;left:0;top:0;width:1672px;height:941px;transform-origin:0 0;will-change:transform;--inv:1;--k:1}
+#stage .bg{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(180deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(180deg,transparent,#000 8%,#000 92%,transparent);mask-composite:intersect}
+#win{position:absolute;left:0;top:0;overflow:hidden;border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 30px 80px rgba(0,0,0,.55)}
+#win img{position:absolute;left:0;top:0;width:1672px;height:941px;display:block;opacity:0;transition:opacity .8s ease;user-select:none;-webkit-user-drag:none}
+#win img.ready{opacity:1}
+.zf{position:absolute;border-radius:12px;border:1px solid transparent;opacity:0;pointer-events:none;transition:opacity .45s ease,border-color .45s ease,box-shadow .45s ease;--c:var(--holo)}
+.zf{border-width:calc(1px*var(--k))}
+.zf i{position:absolute;width:calc(32px*var(--k));height:calc(32px*var(--k));border:calc(3px*var(--k)) solid var(--c);filter:drop-shadow(0 0 calc(6px*var(--k)) var(--c));--o:calc(-4px*var(--k))}
+.zf i:nth-child(1){left:var(--o);top:var(--o);border-right:0;border-bottom:0;border-radius:calc(14px*var(--k)) 0 0 0}
+.zf i:nth-child(2){right:var(--o);top:var(--o);border-left:0;border-bottom:0;border-radius:0 calc(14px*var(--k)) 0 0}
+.zf i:nth-child(3){right:var(--o);bottom:var(--o);border-left:0;border-top:0;border-radius:0 0 calc(14px*var(--k)) 0}
+.zf i:nth-child(4){left:var(--o);bottom:var(--o);border-right:0;border-top:0;border-radius:0 0 0 calc(14px*var(--k))}
+.zf.on,.zf.show{opacity:1;border-color:color-mix(in srgb,var(--c) 42%,transparent);box-shadow:0 0 34px color-mix(in srgb,var(--c) 28%,transparent),inset 0 0 50px color-mix(in srgb,var(--c) 12%,transparent)}
+.zf.on i{animation:corner .8s cubic-bezier(.2,.8,.2,1) both}
+.zf.hover{opacity:1;border-color:color-mix(in srgb,var(--c) 75%,transparent)}
+.zf.show{border-width:calc(1.5px*var(--k));border-color:color-mix(in srgb,var(--c) 70%,transparent);background:color-mix(in srgb,var(--c) 7%,transparent)}
+.zf.st1{--c:var(--holo)} .zf.st2{--c:var(--amber)} .zf.st3{--c:var(--leaf)}
+.zf.dim{opacity:.18}
+@keyframes corner{from{transform:scale(1.5);opacity:0}to{transform:none;opacity:1}}
+.hit{position:absolute;background:transparent;border:0;padding:0;border-radius:12px;cursor:pointer}
+.hit:focus-visible{outline-width:calc(2px*var(--inv))}
+.chip{position:absolute;transform:translate(-50%,0);display:flex;align-items:center;gap:calc(5px*var(--inv));font:600 calc(10.5px*var(--inv))/1 var(--f-tech);letter-spacing:.08em;padding:calc(4px*var(--inv)) calc(8px*var(--inv));border-radius:999px;background:rgba(8,13,28,.82);color:var(--amber);border:calc(1px*var(--inv)) solid rgba(243,184,103,.55);opacity:0;transition:opacity .45s ease;white-space:nowrap;pointer-events:none}
+.chip::before{content:"";width:calc(6px*var(--inv));height:calc(6px*var(--inv));border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(243,184,103,.7);animation:ping 2.4s infinite}
+#stage.is-ov .chip{opacity:1}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(243,184,103,.7)}70%{box-shadow:0 0 0 calc(7px*var(--inv)) rgba(243,184,103,0)}100%{box-shadow:0 0 0 0 rgba(243,184,103,0)}}
+#dust{position:fixed;inset:0;pointer-events:none}
+.vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(4,7,16,.55) 100%)}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed;left:0;right:0;top:0;height:var(--top);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:0 20px;z-index:30;background:linear-gradient(to bottom,rgba(6,10,22,.88),rgba(6,10,22,.55) 60%,rgba(6,10,22,0))}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.brand{transition:opacity .5s ease}
+.at-ov:not(.is-mobile) .brand{opacity:0;pointer-events:none}
+.brand svg{width:36px;height:36px;flex:none}
+.brand b{display:block;font:900 18px/1.15 var(--f-display);letter-spacing:.06em}
+.brand small{display:block;font:500 11px/1.3 var(--f-tech);letter-spacing:.12em;color:var(--muted)}
+.loc{justify-self:center;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);min-width:0}
+.loc .lbl{font:600 11px var(--f-tech);letter-spacing:.18em;color:var(--holo)}
+.loc .now{display:flex;align-items:center;gap:8px;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:fadeSwap .5s ease both}
+@keyframes fadeSwap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ctrls{display:flex;gap:8px}
+.tb-btn{height:38px;display:inline-flex;align-items:center;gap:7px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:rgba(12,20,40,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:13px;cursor:pointer;transition:border-color .2s,background .2s}
+.tb-btn:hover{border-color:rgba(243,184,103,.55);background:rgba(20,30,56,.85)}
+.tb-btn[aria-pressed="true"]{border-color:var(--amber);color:var(--amber)}
+.tb-btn svg{width:16px;height:16px}
+.zn{display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;font:700 12px/1 var(--f-tech);color:var(--amber)}
+
+/* ---------- panel ---------- */
+.panel{position:fixed;z-index:20;top:calc(var(--top) + 8px);width:var(--pw);max-height:calc(100% - var(--top) - var(--bottom) - 18px);overflow:auto;overscroll-behavior:contain;padding:24px 26px 20px;border-radius:22px;background:var(--glass);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);transition:opacity .3s ease,transform .5s cubic-bezier(.2,.8,.2,1);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.panel.side-right{right:22px}
+.panel.side-left{left:22px}
+.panel.band{top:auto;bottom:calc(var(--bottom) + 8px);left:22px;width:min(1140px,calc(100% - 44px));padding:26px 30px 24px}
+.panel.sheet{top:auto;left:8px;right:8px;width:auto;bottom:calc(var(--bottom) + 4px);height:var(--sheet-h);max-height:none;padding:18px 18px 16px;border-radius:20px}
+.panel.out{opacity:0;transform:translateY(14px) scale(.985)}
+.panel.side-right.out{transform:translateX(24px)}
+.panel.side-left.out{transform:translateX(-24px)}
+.panel > *{animation:rise .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*55ms + 60ms)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.p-zone{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.p-zone .zn{width:34px;height:34px;font-size:16px;border-width:2px;box-shadow:0 0 18px rgba(243,184,103,.35)}
+.p-zone b{display:block;font-weight:700;font-size:15px;line-height:1.3}
+.p-zone small{display:block;font:500 11.5px/1.3 var(--f-tech);letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.p-chap{margin-left:auto;flex:none;font:600 11px/1 var(--f-tech);letter-spacing:.12em;color:var(--holo);border:1px solid rgba(134,216,255,.35);border-radius:999px;padding:6px 10px;white-space:nowrap}
+.p-why{margin-top:12px;padding:8px 12px;border-left:2px solid var(--amber);background:linear-gradient(90deg,rgba(243,184,103,.1),transparent);font-size:13.5px;color:#e6dcc8;border-radius:0 8px 8px 0}
+.p-eyebrow{margin-top:18px;font:600 12px/1 var(--f-tech);letter-spacing:.22em;color:var(--holo);text-transform:uppercase}
+.p-head{display:flex;align-items:flex-end;gap:14px;margin-top:8px}
+.p-no{font:700 64px/0.82 var(--f-tech);background:linear-gradient(170deg,#ffe2b0,var(--amber) 55%,#b9772f);-webkit-background-clip:text;background-clip:text;color:transparent;flex:none;letter-spacing:-.02em}
+.p-head h2{font:900 clamp(22px,2.1vw,30px)/1.25 var(--f-display);letter-spacing:.02em}
+.p-lead{margin-top:12px;color:var(--muted);font-size:15px;max-width:60ch}
+.p-body{display:grid;gap:14px;margin-top:18px}
+.p-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;padding-top:12px;border-top:1px solid var(--line);font:500 11px/1.4 var(--f-tech);letter-spacing:.1em;color:#7f8aa8}
+
+.blk{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:14px 16px}
+.blk-t{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 12px/1.3 var(--f-tech);letter-spacing:.14em;color:var(--holo);margin-bottom:10px;text-transform:uppercase}
+.blk-t .cn{font-family:var(--f-body);letter-spacing:.04em;color:var(--text);font-size:13.5px;text-transform:none}
+.hint{font-size:12.5px;color:#8a95b2}
+.note{font-size:12.5px;color:#9aa5c2;padding:10px 12px;border-radius:10px;background:rgba(255,195,77,.06);border:1px dashed rgba(255,195,77,.28)}
+
+/* tools */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.tool{position:relative;display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:14px;padding:14px;background:linear-gradient(160deg,rgba(134,216,255,.07),rgba(255,255,255,.02));min-height:150px}
+.tool .k{font-size:12px;color:var(--muted)}
+.tool .n{font:600 22px/1.15 var(--f-tech);letter-spacing:.02em}
+.tool p{font-size:13.5px;color:#cfd6ea;flex:1}
+.tool .x{font-size:12px;color:var(--amber)}
+.acts{display:flex;gap:8px;margin-top:8px}
+.btn-sm{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:rgba(243,184,103,.14);border:1px solid rgba(243,184,103,.5);color:#ffdcab;text-decoration:none;font-size:13px;cursor:pointer;transition:background .2s}
+.btn-sm:hover{background:rgba(243,184,103,.26)}
+.btn-qr{height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);font:600 12px var(--f-tech);letter-spacing:.08em;cursor:pointer}
+.btn-qr:hover{border-color:var(--holo)}
+.ico{width:14px;height:14px;flex:none}
+.qr-pop{position:absolute;inset:0;border-radius:14px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;color:#0b1226;animation:rise .3s ease both}
+.qr-pop[hidden]{display:none}
+.qr-pop svg{width:104px;height:104px}
+.qr-pop button{border:0;background:#0b1226;color:#fff;border-radius:999px;font-size:12px;padding:4px 12px;cursor:pointer}
+
+/* compare */
+.compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.cmp{border-radius:14px;padding:14px;border:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.cmp-k{font:700 11px/1 var(--f-tech);letter-spacing:.24em}
+.cmp .q{font:600 16px/1.6 var(--f-display)}
+.cmp small{font-size:12.5px;color:var(--muted)}
+.cmp.before{background:rgba(255,255,255,.025)} .cmp.before .cmp-k{color:#8a95b2} .cmp.before .q{color:#b9c1d8}
+.cmp.after{background:linear-gradient(150deg,rgba(243,184,103,.16),rgba(243,184,103,.04));border-color:rgba(243,184,103,.5)} .cmp.after .cmp-k{color:var(--amber)}
+.elems{display:flex;flex-wrap:wrap;gap:8px}
+.elems li{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-weight:500}
+.elems b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--amber);color:#24180a;font:700 12px var(--f-tech)}
+
+/* flows */
+.flow{display:flex;flex-wrap:wrap;gap:10px 22px}
+.flow li{position:relative;flex:1 1 130px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.04);display:flex;flex-direction:column;gap:2px}
+.flow li + li::before{content:"›";position:absolute;left:-16px;top:50%;transform:translateY(-50%);color:var(--amber);font:700 18px/1 var(--f-tech)}
+.fl-k{font:600 11px/1.2 var(--f-tech);letter-spacing:.12em;color:var(--holo)}
+.flow b{font-weight:700;font-size:14.5px;line-height:1.35}
+.flow small{font-size:12.5px;color:var(--muted)}
+.flow.pills li{flex:0 1 auto;padding:7px 12px;border-radius:999px;flex-direction:row;align-items:center;gap:8px}
+.flow.pills b{font-size:13.5px;font-weight:500}
+.flow.pills .fl-k{color:var(--amber)}
+.flow.pills li:last-child{border-color:rgba(243,184,103,.6);background:rgba(243,184,103,.12)}
+.lst{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.lst li{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:14px}
+.lst li span{font:600 12px var(--f-tech);color:var(--amber)}
+
+/* cta */
+.cta{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:14px;border-radius:16px;background:linear-gradient(120deg,rgba(134,216,255,.12),rgba(243,184,103,.1));border:1px solid rgba(134,216,255,.3)}
+.cta-qr{display:block;width:104px;height:104px;border-radius:10px;overflow:hidden;background:#fff;padding:4px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.cta-qr svg{width:100%;height:100%;display:block}
+.cta-t{display:flex;flex-direction:column;gap:8px;align-items:flex-start;min-width:0}
+.cta-tag{font:600 12px/1 var(--f-tech);letter-spacing:.16em;color:var(--holo)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:8px 18px;border-radius:999px;background:linear-gradient(180deg,#ffd394,var(--amber));color:#2a1a06;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 6px 20px rgba(243,184,103,.3);transition:transform .2s,box-shadow .2s;border:0;cursor:pointer}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(243,184,103,.45)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);font-size:14.5px;cursor:pointer}
+.btn-ghost:hover{border-color:var(--holo)}
+.cta-d{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+
+/* factory sim */
+.grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.grid9 li{display:flex;align-items:baseline;gap:8px;border-radius:10px;padding:7px 10px;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:background .35s,border-color .35s,box-shadow .35s}
+.grid9 li span{font:700 11px/1 var(--f-tech);letter-spacing:.1em;color:var(--holo)}
+.grid9 li b{font-size:13.5px;font-weight:500}
+.grid9 li.live{border-color:var(--ok);background:rgba(95,224,166,.12);box-shadow:0 0 16px rgba(95,224,166,.25)}
+.sim.halt .grid9 li{border-color:rgba(255,106,92,.5);background:rgba(255,106,92,.08);box-shadow:none}
+.tag-demo{font:600 10.5px/1 var(--f-tech);letter-spacing:.1em;color:#0b1226;background:var(--holo);padding:4px 7px;border-radius:6px;text-transform:none}
+.states{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:10px}
+.states li{position:relative;padding:5px 12px;border-radius:999px;border:1px solid var(--line);font-size:13px;transition:all .3s}
+.states li + li::before{content:"›";position:absolute;left:-13px;top:50%;transform:translateY(-50%);color:#6f7a98}
+.states li.cur{border-color:var(--ok);color:#eafff5;background:rgba(95,224,166,.16);box-shadow:0 0 12px rgba(95,224,166,.3)}
+.sim.halt .states li{opacity:.4}
+.exc{display:flex;flex-wrap:wrap;gap:6px}
+.exc li{padding:4px 10px;border-radius:6px;font-size:12.5px;border:1px solid}
+.exc .w{border-color:rgba(255,195,77,.45);color:#ffd98a}
+.exc .a{border-color:rgba(255,106,92,.5);color:#ffb1a8}
+.sim.halt .exc .estop-chip{background:var(--alert);color:#fff;border-color:var(--alert);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.55}}
+.estop{margin-top:12px;display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:6px 16px 6px 8px;border-radius:999px;border:1px solid rgba(255,106,92,.6);background:rgba(255,106,92,.12);color:#ffd2cc;font-weight:700;cursor:pointer}
+.estop-dot{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9a8f,#d8261a 60%,#8f1209);box-shadow:0 0 0 3px #ffcf3f,0 2px 6px rgba(0,0,0,.4)}
+.sim.halt .estop{border-color:var(--ok);background:rgba(95,224,166,.12);color:#d9ffef}
+.sim.halt .estop-dot{background:radial-gradient(circle at 35% 30%,#b7ffe0,#2fb67c 60%,#156b45);box-shadow:0 0 0 3px #d9ffef,0 2px 6px rgba(0,0,0,.4)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px}
+.stat{border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.stat b{display:block;font:700 34px/1 var(--f-tech);color:var(--amber);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags li{padding:4px 11px;border-radius:999px;font-size:13px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.tags.hot li{border-color:rgba(134,216,255,.45);color:#d6f1ff}
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:10px}
+.feat li{padding:8px 10px;border-radius:10px;background:rgba(134,216,255,.07);font-size:13.5px}
+.spec{display:inline-block;justify-self:start;font-size:12px;color:#ffd98a;border:1px solid rgba(255,195,77,.35);border-radius:6px;padding:3px 9px}
+.res{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.res b{flex:1 1 70px;text-align:center;padding:12px 6px;border-radius:14px;font:900 22px/1 var(--f-display);background:radial-gradient(circle at 50% 0%,rgba(163,226,168,.22),rgba(255,255,255,.03));border:1px solid rgba(163,226,168,.35)}
+.res i{font-style:normal;color:var(--amber);font:600 18px var(--f-tech)}
+.principle{font-size:14px;padding:12px 14px;border-radius:12px;background:rgba(163,226,168,.08);border:1px solid rgba(163,226,168,.3);color:#e4f6e5}
+.vis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.vis li{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:12px;background:radial-gradient(circle at 50% 20%,rgba(243,184,103,.18),rgba(255,255,255,.02));border:1px solid rgba(243,184,103,.3);font-size:13px;text-align:center}
+.vis svg{width:40px;height:40px}
+.ladder{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:10px}
+.ladder li{position:relative;flex:1 1 120px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:13.5px}
+.ladder li + li::before{content:"→";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:var(--amber);font-family:var(--f-tech)}
+.ladder li:last-child{border-color:rgba(243,184,103,.6);background:rgba(243,184,103,.12);font-weight:700}
+.case{font:600 16px/1.6 var(--f-display)}
+
+/* band: entrance + summary */
+.band-grid{display:grid;grid-template-columns:minmax(280px,.85fr) 1.5fr;gap:28px;align-items:end}
+.band-grid > *{min-width:0}
+.cover-t{font:900 clamp(40px,4.4vw,64px)/1.05 var(--f-display);letter-spacing:.04em;background:linear-gradient(180deg,#fff,#d8e4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-s{margin-top:10px;font:600 17px/1.4 var(--f-display);color:var(--amber);letter-spacing:.08em}
+.cover-p{margin-top:12px;color:var(--muted);font-size:14.5px;max-width:42ch}
+.chapters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.chap{display:flex;flex-direction:column;gap:6px;text-align:left;padding:14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer;transition:border-color .2s,transform .2s,background .2s}
+.chap:hover{border-color:rgba(243,184,103,.6);background:rgba(243,184,103,.08);transform:translateY(-2px)}
+.chap .k{font:600 11px/1 var(--f-tech);letter-spacing:.16em;color:var(--holo)}
+.chap b{font:900 19px/1.2 var(--f-display)}
+.chap .zs{display:flex;gap:4px;flex-wrap:wrap}
+.chap .zs .zn{width:20px;height:20px;font-size:11px;border-width:1.5px}
+.chap .wide{font-size:12px;color:var(--muted)}
+.band-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.stage{position:relative;padding:14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:border-color .25s,background .25s;--c:var(--holo)}
+.stage + .stage::before{content:"›";position:absolute;left:-16px;top:50%;transform:translateY(-50%);color:var(--amber);font:700 20px var(--f-tech)}
+.stage:nth-child(1){--c:var(--holo)} .stage:nth-child(2){--c:var(--amber)} .stage:nth-child(3){--c:var(--leaf)}
+.stage:hover,.stage:focus-within{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent)}
+.stage .k{font:700 26px/1 var(--f-tech);color:var(--c)}
+.stage b{display:block;margin-top:6px;font:900 20px/1.2 var(--f-display)}
+.stage p{margin-top:6px;font-size:13px;color:#cfd6ea}
+.stage .zs{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+.stage .zs .zn{width:20px;height:20px;font-size:11px;color:var(--c)}
+.closing{margin-top:14px;font:900 clamp(20px,2vw,26px)/1.35 var(--f-display);letter-spacing:.04em}
+.closing em{font-style:normal;color:var(--amber)}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;z-index:30;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:20px;background:rgba(9,15,32,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.4);max-width:calc(100% - 24px)}
+.mini{position:relative;width:112px;height:63px;border-radius:10px;overflow:hidden;border:1px solid var(--line);padding:0;background:#000;cursor:pointer;flex:none}
+.mini img{width:100%;height:100%;display:block;opacity:.85}
+.mini-view{position:absolute;border:1.5px solid var(--amber);box-shadow:0 0 0 999px rgba(4,8,18,.35);border-radius:2px;pointer-events:none}
+.nav{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);display:grid;place-items:center;cursor:pointer;flex:none;transition:border-color .2s,background .2s}
+.nav:hover:not(:disabled){border-color:var(--amber);background:rgba(243,184,103,.12)}
+.nav:disabled{opacity:.35;cursor:default}
+.nav svg{width:18px;height:18px}
+.tl{display:flex;align-items:flex-end;gap:14px;padding:0 4px}
+.grp{display:flex;flex-direction:column;align-items:center;gap:4px}
+.grp-l{font-size:11px;color:#8a95b2;letter-spacing:.08em;white-space:nowrap;transition:color .3s}
+.grp.cur .grp-l{color:var(--amber)}
+.nodes{position:relative;display:flex;gap:6px}
+.nodes::before{content:"";position:absolute;left:12px;right:12px;top:50%;height:1px;background:var(--line)}
+.node{position:relative;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(188,208,255,.35);background:#0d1530;display:grid;place-items:center;font:700 11.5px/1 var(--f-tech);color:var(--muted);cursor:pointer;padding:0;transition:all .3s}
+.node:hover{border-color:var(--holo);color:var(--text)}
+.node.seen{border-color:rgba(134,216,255,.7);color:#cfefff}
+.node.cur{border-color:var(--amber);background:var(--amber);color:#24180a;box-shadow:0 0 16px rgba(243,184,103,.55);transform:scale(1.12)}
+.node.wide{width:auto;padding:0 10px;border-radius:999px;font-family:var(--f-body);font-weight:500;font-size:12px}
+.mcount{display:none;flex-direction:column;align-items:center;min-width:0;flex:1;font-size:12.5px;color:var(--muted);text-align:center}
+.mcount b{font:700 15px var(--f-tech);color:var(--text);letter-spacing:.06em}
+.mbar{display:block;width:100%;height:3px;border-radius:3px;background:var(--line);margin-top:5px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--amber);transition:width .6s ease}
+
+.tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;padding:9px 12px;border-radius:12px;background:rgba(7,12,26,.94);border:1px solid rgba(243,184,103,.45);font-size:13px;line-height:1.45;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.tip.on{opacity:1;transform:none}
+.tip .s{display:block;font:600 11px var(--f-tech);letter-spacing:.14em;color:var(--holo)}
+.tip .a{display:block;margin-top:4px;font-size:12px;color:var(--amber)}
+
+/* ---------- entrance doors ---------- */
+.doors{position:fixed;inset:0;z-index:60;pointer-events:none;display:grid;place-items:center}
+.door{position:absolute;top:0;bottom:0;width:50.2%;background:linear-gradient(180deg,#0c1430,#070b18);animation:doorL 1.5s cubic-bezier(.7,0,.2,1) .9s both}
+.door.l{left:0;border-right:1px solid rgba(243,184,103,.6);box-shadow:inset -40px 0 80px rgba(243,184,103,.08)}
+.door.r{right:0;border-left:1px solid rgba(243,184,103,.6);box-shadow:inset 40px 0 80px rgba(243,184,103,.08);animation-name:doorR}
+.door::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 64px)}
+@keyframes doorL{to{transform:translateX(-101%)}}
+@keyframes doorR{to{transform:translateX(101%)}}
+.door-logo{position:relative;text-align:center;animation:logoOut .7s ease .75s both}
+.door-logo svg{width:84px;height:84px;filter:drop-shadow(0 0 22px rgba(134,216,255,.45))}
+.door-logo b{display:block;margin-top:14px;font:900 clamp(26px,4vw,40px)/1.2 var(--f-display);letter-spacing:.12em}
+.door-logo small{display:block;margin-top:6px;font:500 13px var(--f-tech);letter-spacing:.24em;color:var(--muted)}
+@keyframes logoOut{from{opacity:1;transform:none}to{opacity:0;transform:scale(1.08)}}
+.doors.done{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .mini{display:none}
+  .chapters{grid-template-columns:repeat(2,1fr)}
+  .loc .lbl{display:none}
+}
+@media (max-width:980px){
+  .tl{gap:8px} .grp-l{font-size:10px} .node{width:25px;height:25px}
+  .tb-btn .t{display:none} .tb-btn{padding:0 11px}
+}
+.is-mobile .loc{display:none}
+.is-mobile .chip .cs{display:none}
+.is-mobile .chip{font-size:calc(9px*var(--inv));padding:calc(3px*var(--inv)) calc(6px*var(--inv))}
+.is-mobile .brand small{display:none}
+.is-mobile .brand b{font-size:15px}
+.is-mobile .topbar{padding:0 12px;grid-template-columns:1fr auto}
+.is-mobile .tb-btn .t{display:none}
+.is-mobile .tb-btn{padding:0 10px;height:36px}
+.is-mobile .tl,.is-mobile .mini{display:none}
+.is-mobile .mcount{display:flex}
+.is-mobile .dock{left:8px;right:8px;transform:none;bottom:8px;max-width:none;padding:6px 8px;border-radius:16px}
+.is-mobile .band-grid{grid-template-columns:1fr;gap:16px}
+.is-mobile .chapters{grid-template-columns:repeat(2,1fr)}
+.is-mobile .stages{grid-template-columns:1fr;gap:12px}
+.is-mobile .stage + .stage::before{content:none}
+.is-mobile .cover-t{font-size:38px}
+.is-mobile .p-no{font-size:48px}
+.is-mobile .p-head h2{font-size:21px}
+.is-mobile .vis{grid-template-columns:repeat(2,1fr)}
+.is-mobile .cta{grid-template-columns:1fr}
+.is-mobile .cta-qr{width:96px;height:96px}
+.sheet-grip{display:none}
+.is-mobile .sheet-grip{display:block;width:44px;height:4px;border-radius:4px;background:rgba(255,255,255,.25);margin:-6px auto 10px;animation:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .doors{display:none}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="backdrop" aria-hidden="true"></div>
+  <div id="viewport" aria-label="工作坊場景">
+    <div id="stage">
+      <img class="bg" src="office-bg.webp" alt="" draggable="false">
+      <div id="win"><img id="sharp" src="office.webp" alt="蒼穹創意科技工作坊的挑高辦公室：九個工作區環繞中央指揮工作站" draggable="false"></div>
+      <div id="frames"></div>
+      <div id="hits"></div>
+    </div>
+  </div>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <button class="brand" type="button" id="brand" aria-label="回到入口全景">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9f3ff"/><stop offset="1" stop-color="#86d8ff"/></linearGradient></defs>
+        <path d="M8 40 L24 8 L40 40" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M3 31 C 14 22, 34 21, 46 27" fill="none" stroke="#f3b867" stroke-width="2" stroke-linecap="round"/>
+        <path d="M33 5 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6z" fill="#ffe2b0"/>
+      </svg>
+      <span><b>蒼穹創意科技工作坊</b><small>AethEr'Is — Creative Technology Studio</small></span>
+    </button>
+    <div class="loc" aria-live="polite"><span class="lbl">目前位置</span><span class="now" id="locNow"></span></div>
+    <div class="ctrls">
+      <button class="tb-btn" type="button" id="btnHome" aria-label="回到全景"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 7.5 8 2.5l6 5M3.8 6.2V13.5h8.4V6.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="t">全景</span></button>
+      <button class="tb-btn" type="button" id="btnAuto" aria-pressed="false" aria-label="自動導覽"><svg viewBox="0 0 16 16" aria-hidden="true" id="autoIco"><path d="M5 3.2v9.6L12.8 8z" fill="currentColor"/></svg><span class="t">自動導覽</span></button>
+      <button class="tb-btn" type="button" id="btnFs" aria-label="全螢幕"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span class="t">全螢幕</span></button>
+    </div>
+  </header>
+
+  <aside id="panel" class="panel out" aria-live="polite"></aside>
+
+  <nav class="dock" aria-label="導覽時間軸">
+    <button class="mini" type="button" id="mini" aria-label="小地圖：點選區域前往"><img src="office-thumb.webp" alt=""><span class="mini-view" id="miniView"></span></button>
+    <button class="nav" type="button" id="prev" aria-label="上一站"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="tl" id="tl"></div>
+    <div class="mcount" id="mcount"></div>
+    <button class="nav" type="button" id="next" aria-label="下一站"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </nav>
+
+  <div class="tip" id="tip" role="tooltip"></div>
+
+  <div class="doors" id="doors" aria-hidden="true">
+    <div class="door l"></div><div class="door r"></div>
+    <div class="door-logo">
+      <svg viewBox="0 0 48 48"><path d="M8 40 L24 8 L40 40" fill="none" stroke="#bfe9ff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M3 31 C 14 22, 34 21, 46 27" fill="none" stroke="#f3b867" stroke-width="1.8" stroke-linecap="round"/><path d="M33 5 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6z" fill="#ffe2b0"/></svg>
+      <b>蒼穹創意科技工作坊</b>
+      <small>AETHER'IS · CREATIVE TECHNOLOGY STUDIO</small>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+const IW = 1672, IH = 941;
+const QR = {"suno": {"n": 37, "d": "M2 2h7v1h-7zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h2v1h-2zM18 2h3v1h-3zM23 2h2v1h-2zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM11 3h3v1h-3zM22 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h2v1h-2zM15 4h1v1h-1zM17 4h3v1h-3zM22 4h2v1h-2zM25 4h2v1h-2zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM11 5h2v1h-2zM17 5h1v1h-1zM25 5h1v1h-1zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM12 6h3v1h-3zM17 6h1v1h-1zM21 6h1v1h-1zM25 6h1v1h-1zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h4v1h-4zM15 7h3v1h-3zM19 7h3v1h-3zM23 7h3v1h-3zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM11 9h3v1h-3zM16 9h3v1h-3zM20 9h3v1h-3zM24 9h3v1h-3zM2 10h1v1h-1zM4 10h1v1h-1zM8 10h2v1h-2zM11 10h1v1h-1zM14 10h1v1h-1zM18 10h1v1h-1zM22 10h1v1h-1zM29 10h1v1h-1zM32 10h1v1h-1zM34 10h1v1h-1zM2 11h1v1h-1zM4 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM12 11h8v1h-8zM21 11h6v1h-6zM28 11h1v1h-1zM31 11h1v1h-1zM33 11h1v1h-1zM6 12h3v1h-3zM11 12h2v1h-2zM14 12h1v1h-1zM17 12h1v1h-1zM21 12h2v1h-2zM25 12h2v1h-2zM31 12h2v1h-2zM34 12h1v1h-1zM2 13h6v1h-6zM9 13h1v1h-1zM11 13h1v1h-1zM13 13h3v1h-3zM17 13h1v1h-1zM19 13h1v1h-1zM21 13h3v1h-3zM25 13h2v1h-2zM28 13h4v1h-4zM34 13h1v1h-1zM2 14h3v1h-3zM8 14h1v1h-1zM10 14h1v1h-1zM13 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM23 14h1v1h-1zM26 14h1v1h-1zM28 14h3v1h-3zM33 14h2v1h-2zM3 15h1v1h-1zM6 15h2v1h-2zM9 15h1v1h-1zM12 15h2v1h-2zM15 15h1v1h-1zM19 15h1v1h-1zM27 15h1v1h-1zM29 15h1v1h-1zM31 15h1v1h-1zM33 15h2v1h-2zM2 16h2v1h-2zM6 16h3v1h-3zM10 16h1v1h-1zM12 16h4v1h-4zM17 16h1v1h-1zM19 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h2v1h-2zM29 16h1v1h-1zM34 16h1v1h-1zM2 17h3v1h-3zM7 17h1v1h-1zM9 17h1v1h-1zM11 17h1v1h-1zM15 17h2v1h-2zM20 17h1v1h-1zM24 17h1v1h-1zM27 17h2v1h-2zM31 17h1v1h-1zM2 18h2v1h-2zM8 18h1v1h-1zM10 18h1v1h-1zM12 18h3v1h-3zM17 18h2v1h-2zM20 18h3v1h-3zM25 18h2v1h-2zM28 18h2v1h-2zM32 18h2v1h-2zM2 19h1v1h-1zM4 19h1v1h-1zM6 19h2v1h-2zM12 19h1v1h-1zM14 19h5v1h-5zM21 19h1v1h-1zM24 19h2v1h-2zM27 19h2v1h-2zM31 19h1v1h-1zM33 19h2v1h-2zM2 20h1v1h-1zM5 20h1v1h-1zM7 20h2v1h-2zM10 20h1v1h-1zM12 20h1v1h-1zM15 20h1v1h-1zM17 20h5v1h-5zM23 20h3v1h-3zM28 20h2v1h-2zM31 20h4v1h-4zM3 21h3v1h-3zM9 21h1v1h-1zM11 21h1v1h-1zM13 21h3v1h-3zM18 21h1v1h-1zM20 21h1v1h-1zM22 21h1v1h-1zM24 21h4v1h-4zM30 21h2v1h-2zM33 21h1v1h-1zM4 22h1v1h-1zM8 22h3v1h-3zM12 22h1v1h-1zM16 22h10v1h-10zM28 22h1v1h-1zM3 23h1v1h-1zM7 23h1v1h-1zM9 23h2v1h-2zM12 23h5v1h-5zM18 23h3v1h-3zM22 23h1v1h-1zM24 23h2v1h-2zM28 23h2v1h-2zM34 23h1v1h-1zM2 24h8v1h-8zM13 24h3v1h-3zM18 24h1v1h-1zM22 24h2v1h-2zM25 24h1v1h-1zM28 24h1v1h-1zM32 24h1v1h-1zM34 24h1v1h-1zM4 25h1v1h-1zM9 25h3v1h-3zM15 25h1v1h-1zM17 25h2v1h-2zM20 25h3v1h-3zM25 25h1v1h-1zM27 25h3v1h-3zM31 25h1v1h-1zM33 25h2v1h-2zM2 26h4v1h-4zM7 26h3v1h-3zM11 26h1v1h-1zM13 26h1v1h-1zM15 26h2v1h-2zM22 26h1v1h-1zM25 26h6v1h-6zM32 26h2v1h-2zM10 27h6v1h-6zM17 27h10v1h-10zM30 27h1v1h-1zM33 27h2v1h-2zM2 28h7v1h-7zM10 28h3v1h-3zM14 28h2v1h-2zM17 28h1v1h-1zM21 28h2v1h-2zM26 28h1v1h-1zM28 28h1v1h-1zM30 28h5v1h-5zM2 29h1v1h-1zM8 29h1v1h-1zM11 29h2v1h-2zM15 29h1v1h-1zM19 29h1v1h-1zM21 29h1v1h-1zM23 29h1v1h-1zM25 29h2v1h-2zM30 29h2v1h-2zM34 29h1v1h-1zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM12 30h1v1h-1zM14 30h4v1h-4zM19 30h1v1h-1zM21 30h1v1h-1zM23 30h1v1h-1zM25 30h6v1h-6zM34 30h1v1h-1zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM11 31h1v1h-1zM16 31h1v1h-1zM25 31h3v1h-3zM29 31h3v1h-3zM34 31h1v1h-1zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM10 32h2v1h-2zM13 32h3v1h-3zM17 32h1v1h-1zM21 32h1v1h-1zM23 32h1v1h-1zM26 32h1v1h-1zM29 32h2v1h-2zM33 32h2v1h-2zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h3v1h-3zM15 33h1v1h-1zM20 33h1v1h-1zM24 33h1v1h-1zM27 33h1v1h-1zM29 33h3v1h-3zM2 34h7v1h-7zM10 34h2v1h-2zM13 34h1v1h-1zM17 34h2v1h-2zM21 34h2v1h-2zM26 34h1v1h-1zM28 34h3v1h-3zM34 34h1v1h-1z"}, "chatpdf": {"n": 37, "d": "M2 2h7v1h-7zM11 2h2v1h-2zM15 2h2v1h-2zM18 2h3v1h-3zM23 2h2v1h-2zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM22 3h3v1h-3zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h4v1h-4zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h2v1h-2zM23 4h4v1h-4zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h3v1h-3zM16 5h1v1h-1zM18 5h1v1h-1zM20 5h1v1h-1zM23 5h2v1h-2zM26 5h1v1h-1zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM11 6h1v1h-1zM13 6h9v1h-9zM24 6h1v1h-1zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h3v1h-3zM19 7h1v1h-1zM22 7h1v1h-1zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM10 9h1v1h-1zM13 9h2v1h-2zM16 9h3v1h-3zM25 9h1v1h-1zM2 10h1v1h-1zM8 10h1v1h-1zM10 10h7v1h-7zM18 10h2v1h-2zM21 10h1v1h-1zM24 10h1v1h-1zM26 10h3v1h-3zM31 10h3v1h-3zM2 11h3v1h-3zM6 11h1v1h-1zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h2v1h-2zM19 11h3v1h-3zM24 11h2v1h-2zM30 11h3v1h-3zM5 12h2v1h-2zM8 12h1v1h-1zM11 12h2v1h-2zM14 12h4v1h-4zM19 12h1v1h-1zM26 12h2v1h-2zM30 12h1v1h-1zM32 12h2v1h-2zM3 13h4v1h-4zM9 13h1v1h-1zM11 13h3v1h-3zM15 13h1v1h-1zM18 13h5v1h-5zM24 13h2v1h-2zM27 13h6v1h-6zM34 13h1v1h-1zM3 14h7v1h-7zM13 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM23 14h1v1h-1zM28 14h3v1h-3zM33 14h1v1h-1zM2 15h1v1h-1zM4 15h1v1h-1zM6 15h2v1h-2zM9 15h3v1h-3zM15 15h1v1h-1zM19 15h4v1h-4zM25 15h2v1h-2zM29 15h1v1h-1zM33 15h2v1h-2zM2 16h5v1h-5zM8 16h2v1h-2zM11 16h1v1h-1zM13 16h2v1h-2zM16 16h3v1h-3zM22 16h2v1h-2zM27 16h2v1h-2zM32 16h2v1h-2zM2 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM9 17h4v1h-4zM15 17h2v1h-2zM18 17h1v1h-1zM26 17h2v1h-2zM29 17h4v1h-4zM34 17h1v1h-1zM3 18h1v1h-1zM6 18h3v1h-3zM10 18h4v1h-4zM15 18h1v1h-1zM17 18h4v1h-4zM24 18h1v1h-1zM26 18h2v1h-2zM29 18h2v1h-2zM32 18h1v1h-1zM34 18h1v1h-1zM5 19h3v1h-3zM10 19h2v1h-2zM14 19h1v1h-1zM16 19h1v1h-1zM18 19h1v1h-1zM20 19h2v1h-2zM23 19h6v1h-6zM31 19h2v1h-2zM34 19h1v1h-1zM2 20h4v1h-4zM8 20h2v1h-2zM11 20h3v1h-3zM15 20h3v1h-3zM19 20h7v1h-7zM27 20h1v1h-1zM29 20h1v1h-1zM31 20h2v1h-2zM34 20h1v1h-1zM2 21h2v1h-2zM6 21h1v1h-1zM11 21h2v1h-2zM18 21h1v1h-1zM21 21h2v1h-2zM25 21h1v1h-1zM27 21h1v1h-1zM30 21h5v1h-5zM2 22h2v1h-2zM6 22h3v1h-3zM13 22h1v1h-1zM15 22h1v1h-1zM20 22h1v1h-1zM22 22h3v1h-3zM27 22h1v1h-1zM29 22h3v1h-3zM33 22h2v1h-2zM2 23h1v1h-1zM4 23h1v1h-1zM6 23h1v1h-1zM10 23h2v1h-2zM13 23h2v1h-2zM16 23h1v1h-1zM19 23h1v1h-1zM21 23h1v1h-1zM25 23h1v1h-1zM28 23h3v1h-3zM32 23h1v1h-1zM2 24h1v1h-1zM4 24h2v1h-2zM8 24h1v1h-1zM12 24h1v1h-1zM14 24h1v1h-1zM16 24h1v1h-1zM19 24h1v1h-1zM23 24h2v1h-2zM27 24h1v1h-1zM29 24h2v1h-2zM33 24h1v1h-1zM2 25h1v1h-1zM5 25h3v1h-3zM9 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM17 25h2v1h-2zM21 25h1v1h-1zM25 25h4v1h-4zM32 25h2v1h-2zM2 26h5v1h-5zM8 26h2v1h-2zM11 26h2v1h-2zM15 26h1v1h-1zM18 26h1v1h-1zM21 26h2v1h-2zM25 26h6v1h-6zM34 26h1v1h-1zM10 27h1v1h-1zM13 27h1v1h-1zM15 27h1v1h-1zM17 27h1v1h-1zM19 27h1v1h-1zM21 27h2v1h-2zM24 27h3v1h-3zM30 27h1v1h-1zM32 27h1v1h-1zM34 27h1v1h-1zM2 28h7v1h-7zM12 28h1v1h-1zM16 28h2v1h-2zM19 28h1v1h-1zM25 28h2v1h-2zM28 28h1v1h-1zM30 28h1v1h-1zM32 28h1v1h-1zM2 29h1v1h-1zM8 29h1v1h-1zM14 29h1v1h-1zM16 29h1v1h-1zM18 29h3v1h-3zM24 29h3v1h-3zM30 29h4v1h-4zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM11 30h1v1h-1zM14 30h1v1h-1zM16 30h1v1h-1zM18 30h1v1h-1zM22 30h1v1h-1zM24 30h1v1h-1zM26 30h6v1h-6zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM12 31h4v1h-4zM19 31h4v1h-4zM24 31h2v1h-2zM27 31h1v1h-1zM29 31h2v1h-2zM32 31h3v1h-3zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM11 32h1v1h-1zM15 32h3v1h-3zM20 32h5v1h-5zM26 32h1v1h-1zM29 32h2v1h-2zM32 32h3v1h-3zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h1v1h-1zM14 33h2v1h-2zM20 33h2v1h-2zM27 33h6v1h-6zM2 34h7v1h-7zM10 34h2v1h-2zM13 34h1v1h-1zM16 34h2v1h-2zM19 34h1v1h-1zM21 34h1v1h-1zM24 34h4v1h-4zM29 34h1v1h-1zM33 34h1v1h-1z"}, "notebooklm": {"n": 41, "d": "M2 2h7v1h-7zM12 2h3v1h-3zM16 2h1v1h-1zM18 2h3v1h-3zM22 2h7v1h-7zM32 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM12 3h4v1h-4zM18 3h2v1h-2zM21 3h1v1h-1zM27 3h1v1h-1zM29 3h2v1h-2zM32 3h1v1h-1zM38 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h2v1h-2zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM21 4h6v1h-6zM28 4h1v1h-1zM30 4h1v1h-1zM32 4h1v1h-1zM34 4h3v1h-3zM38 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h1v1h-1zM13 5h2v1h-2zM16 5h1v1h-1zM18 5h2v1h-2zM21 5h1v1h-1zM24 5h1v1h-1zM26 5h2v1h-2zM29 5h1v1h-1zM32 5h1v1h-1zM34 5h3v1h-3zM38 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM15 6h1v1h-1zM20 6h3v1h-3zM25 6h1v1h-1zM27 6h1v1h-1zM30 6h1v1h-1zM32 6h1v1h-1zM34 6h3v1h-3zM38 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h2v1h-2zM14 7h2v1h-2zM18 7h1v1h-1zM20 7h1v1h-1zM23 7h1v1h-1zM26 7h1v1h-1zM29 7h2v1h-2zM32 7h1v1h-1zM38 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h1v1h-1zM30 8h1v1h-1zM32 8h7v1h-7zM10 9h3v1h-3zM17 9h2v1h-2zM21 9h1v1h-1zM23 9h3v1h-3zM28 9h1v1h-1zM30 9h1v1h-1zM2 10h1v1h-1zM4 10h5v1h-5zM13 10h1v1h-1zM17 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM25 10h1v1h-1zM27 10h2v1h-2zM30 10h1v1h-1zM32 10h5v1h-5zM7 11h1v1h-1zM13 11h1v1h-1zM15 11h5v1h-5zM24 11h4v1h-4zM31 11h1v1h-1zM37 11h1v1h-1zM2 12h2v1h-2zM5 12h5v1h-5zM13 12h1v1h-1zM15 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM24 12h1v1h-1zM26 12h6v1h-6zM33 12h1v1h-1zM37 12h2v1h-2zM5 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM13 13h1v1h-1zM18 13h1v1h-1zM23 13h3v1h-3zM29 13h1v1h-1zM33 13h3v1h-3zM38 13h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM11 14h3v1h-3zM18 14h2v1h-2zM24 14h1v1h-1zM26 14h4v1h-4zM31 14h2v1h-2zM34 14h5v1h-5zM2 15h2v1h-2zM9 15h2v1h-2zM13 15h1v1h-1zM15 15h1v1h-1zM19 15h5v1h-5zM25 15h2v1h-2zM30 15h1v1h-1zM33 15h1v1h-1zM2 16h1v1h-1zM4 16h11v1h-11zM17 16h3v1h-3zM22 16h2v1h-2zM29 16h7v1h-7zM37 16h2v1h-2zM2 17h1v1h-1zM4 17h2v1h-2zM9 17h2v1h-2zM12 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM19 17h2v1h-2zM22 17h3v1h-3zM28 17h1v1h-1zM30 17h1v1h-1zM32 17h3v1h-3zM37 17h2v1h-2zM2 18h1v1h-1zM5 18h4v1h-4zM12 18h1v1h-1zM14 18h1v1h-1zM16 18h3v1h-3zM27 18h1v1h-1zM32 18h1v1h-1zM34 18h1v1h-1zM36 18h1v1h-1zM38 18h1v1h-1zM2 19h2v1h-2zM5 19h1v1h-1zM10 19h1v1h-1zM15 19h1v1h-1zM17 19h1v1h-1zM19 19h2v1h-2zM22 19h1v1h-1zM24 19h3v1h-3zM30 19h2v1h-2zM36 19h2v1h-2zM3 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM11 20h1v1h-1zM15 20h7v1h-7zM23 20h2v1h-2zM27 20h5v1h-5zM34 20h1v1h-1zM37 20h2v1h-2zM5 21h2v1h-2zM13 21h3v1h-3zM17 21h1v1h-1zM21 21h4v1h-4zM26 21h1v1h-1zM28 21h4v1h-4zM38 21h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM10 22h5v1h-5zM17 22h1v1h-1zM19 22h3v1h-3zM26 22h3v1h-3zM31 22h2v1h-2zM34 22h3v1h-3zM5 23h2v1h-2zM9 23h3v1h-3zM13 23h2v1h-2zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h4v1h-4zM25 23h1v1h-1zM27 23h1v1h-1zM30 23h2v1h-2zM35 23h1v1h-1zM37 23h1v1h-1zM2 24h4v1h-4zM7 24h2v1h-2zM10 24h1v1h-1zM14 24h2v1h-2zM17 24h1v1h-1zM20 24h1v1h-1zM26 24h1v1h-1zM28 24h2v1h-2zM33 24h3v1h-3zM38 24h1v1h-1zM5 25h2v1h-2zM9 25h1v1h-1zM13 25h1v1h-1zM15 25h1v1h-1zM17 25h1v1h-1zM22 25h2v1h-2zM28 25h1v1h-1zM32 25h3v1h-3zM37 25h2v1h-2zM2 26h1v1h-1zM6 26h1v1h-1zM8 26h4v1h-4zM13 26h1v1h-1zM15 26h3v1h-3zM20 26h1v1h-1zM25 26h1v1h-1zM27 26h3v1h-3zM31 26h4v1h-4zM36 26h1v1h-1zM38 26h1v1h-1zM2 27h2v1h-2zM5 27h3v1h-3zM9 27h7v1h-7zM17 27h3v1h-3zM24 27h4v1h-4zM35 27h1v1h-1zM2 28h1v1h-1zM4 28h2v1h-2zM7 28h8v1h-8zM19 28h1v1h-1zM24 28h1v1h-1zM27 28h3v1h-3zM31 28h2v1h-2zM34 28h1v1h-1zM36 28h3v1h-3zM2 29h1v1h-1zM4 29h4v1h-4zM14 29h1v1h-1zM18 29h1v1h-1zM21 29h1v1h-1zM23 29h2v1h-2zM26 29h1v1h-1zM28 29h1v1h-1zM30 29h1v1h-1zM32 29h1v1h-1zM35 29h1v1h-1zM37 29h2v1h-2zM2 30h3v1h-3zM7 30h4v1h-4zM14 30h3v1h-3zM18 30h2v1h-2zM22 30h1v1h-1zM24 30h1v1h-1zM26 30h9v1h-9zM36 30h1v1h-1zM10 31h1v1h-1zM12 31h1v1h-1zM15 31h1v1h-1zM19 31h5v1h-5zM25 31h1v1h-1zM29 31h2v1h-2zM34 31h2v1h-2zM2 32h7v1h-7zM16 32h2v1h-2zM19 32h1v1h-1zM22 32h1v1h-1zM27 32h1v1h-1zM30 32h1v1h-1zM32 32h1v1h-1zM34 32h1v1h-1zM36 32h3v1h-3zM2 33h1v1h-1zM8 33h1v1h-1zM10 33h2v1h-2zM14 33h1v1h-1zM16 33h1v1h-1zM18 33h6v1h-6zM25 33h1v1h-1zM30 33h1v1h-1zM34 33h2v1h-2zM2 34h1v1h-1zM4 34h3v1h-3zM8 34h1v1h-1zM10 34h3v1h-3zM15 34h4v1h-4zM21 34h1v1h-1zM26 34h9v1h-9zM36 34h3v1h-3zM2 35h1v1h-1zM4 35h3v1h-3zM8 35h1v1h-1zM10 35h2v1h-2zM14 35h4v1h-4zM20 35h3v1h-3zM24 35h2v1h-2zM27 35h1v1h-1zM31 35h2v1h-2zM34 35h2v1h-2zM38 35h1v1h-1zM2 36h1v1h-1zM4 36h3v1h-3zM8 36h1v1h-1zM10 36h3v1h-3zM16 36h3v1h-3zM24 36h1v1h-1zM26 36h3v1h-3zM35 36h4v1h-4zM2 37h1v1h-1zM8 37h1v1h-1zM12 37h2v1h-2zM17 37h1v1h-1zM23 37h1v1h-1zM28 37h3v1h-3zM32 37h1v1h-1zM34 37h1v1h-1zM38 37h1v1h-1zM2 38h7v1h-7zM10 38h2v1h-2zM15 38h3v1h-3zM19 38h1v1h-1zM21 38h1v1h-1zM24 38h1v1h-1zM26 38h3v1h-3zM34 38h5v1h-5z"}, "sumeeko_analysis": {"n": 37, "d": "M2 2h7v1h-7zM11 2h1v1h-1zM14 2h3v1h-3zM18 2h2v1h-2zM21 2h3v1h-3zM25 2h1v1h-1zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM14 3h6v1h-6zM22 3h2v1h-2zM26 3h1v1h-1zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h6v1h-6zM18 4h1v1h-1zM20 4h1v1h-1zM23 4h4v1h-4zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h2v1h-2zM13 5h2v1h-2zM16 5h1v1h-1zM19 5h1v1h-1zM21 5h1v1h-1zM24 5h1v1h-1zM26 5h1v1h-1zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h3v1h-3zM14 6h1v1h-1zM17 6h1v1h-1zM20 6h4v1h-4zM25 6h1v1h-1zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h3v1h-3zM14 7h2v1h-2zM17 7h2v1h-2zM22 7h2v1h-2zM26 7h1v1h-1zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM10 9h1v1h-1zM16 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM23 9h3v1h-3zM2 10h1v1h-1zM4 10h5v1h-5zM12 10h5v1h-5zM19 10h1v1h-1zM24 10h1v1h-1zM28 10h5v1h-5zM2 11h2v1h-2zM5 11h1v1h-1zM9 11h2v1h-2zM12 11h2v1h-2zM16 11h1v1h-1zM20 11h4v1h-4zM25 11h1v1h-1zM28 11h2v1h-2zM31 11h2v1h-2zM34 11h1v1h-1zM2 12h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM10 12h2v1h-2zM17 12h2v1h-2zM20 12h1v1h-1zM22 12h1v1h-1zM27 12h2v1h-2zM30 12h1v1h-1zM32 12h2v1h-2zM2 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM9 13h2v1h-2zM13 13h2v1h-2zM16 13h1v1h-1zM18 13h1v1h-1zM21 13h4v1h-4zM27 13h1v1h-1zM30 13h4v1h-4zM2 14h3v1h-3zM8 14h1v1h-1zM12 14h3v1h-3zM19 14h1v1h-1zM24 14h1v1h-1zM26 14h2v1h-2zM29 14h3v1h-3zM33 14h1v1h-1zM6 15h1v1h-1zM10 15h4v1h-4zM15 15h2v1h-2zM19 15h7v1h-7zM28 15h1v1h-1zM31 15h4v1h-4zM5 16h1v1h-1zM8 16h1v1h-1zM12 16h1v1h-1zM17 16h2v1h-2zM20 16h1v1h-1zM22 16h1v1h-1zM27 16h2v1h-2zM30 16h4v1h-4zM2 17h1v1h-1zM5 17h1v1h-1zM11 17h1v1h-1zM13 17h2v1h-2zM20 17h5v1h-5zM27 17h3v1h-3zM31 17h2v1h-2zM3 18h1v1h-1zM6 18h1v1h-1zM8 18h2v1h-2zM11 18h4v1h-4zM17 18h1v1h-1zM19 18h1v1h-1zM21 18h1v1h-1zM24 18h4v1h-4zM29 18h2v1h-2zM34 18h1v1h-1zM4 19h1v1h-1zM9 19h2v1h-2zM14 19h2v1h-2zM18 19h2v1h-2zM21 19h3v1h-3zM25 19h1v1h-1zM27 19h3v1h-3zM31 19h2v1h-2zM34 19h1v1h-1zM8 20h1v1h-1zM12 20h2v1h-2zM15 20h1v1h-1zM17 20h2v1h-2zM23 20h2v1h-2zM26 20h1v1h-1zM29 20h2v1h-2zM32 20h2v1h-2zM2 21h2v1h-2zM5 21h1v1h-1zM7 21h1v1h-1zM9 21h2v1h-2zM12 21h2v1h-2zM16 21h2v1h-2zM20 21h4v1h-4zM26 21h2v1h-2zM29 21h5v1h-5zM2 22h5v1h-5zM8 22h3v1h-3zM15 22h2v1h-2zM18 22h2v1h-2zM21 22h1v1h-1zM24 22h4v1h-4zM30 22h2v1h-2zM33 22h2v1h-2zM2 23h1v1h-1zM5 23h2v1h-2zM9 23h1v1h-1zM15 23h2v1h-2zM18 23h1v1h-1zM21 23h1v1h-1zM25 23h4v1h-4zM34 23h1v1h-1zM2 24h1v1h-1zM4 24h2v1h-2zM8 24h1v1h-1zM10 24h1v1h-1zM12 24h1v1h-1zM16 24h3v1h-3zM22 24h3v1h-3zM26 24h1v1h-1zM31 24h1v1h-1zM33 24h1v1h-1zM2 25h1v1h-1zM6 25h2v1h-2zM9 25h2v1h-2zM12 25h1v1h-1zM15 25h3v1h-3zM23 25h1v1h-1zM27 25h2v1h-2zM30 25h3v1h-3zM2 26h2v1h-2zM5 26h1v1h-1zM8 26h1v1h-1zM10 26h2v1h-2zM13 26h1v1h-1zM16 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM24 26h1v1h-1zM26 26h5v1h-5zM33 26h2v1h-2zM10 27h2v1h-2zM13 27h4v1h-4zM18 27h4v1h-4zM26 27h1v1h-1zM30 27h1v1h-1zM32 27h1v1h-1zM34 27h1v1h-1zM2 28h7v1h-7zM11 28h1v1h-1zM13 28h1v1h-1zM16 28h2v1h-2zM20 28h1v1h-1zM22 28h1v1h-1zM24 28h3v1h-3zM28 28h1v1h-1zM30 28h1v1h-1zM32 28h2v1h-2zM2 29h1v1h-1zM8 29h1v1h-1zM10 29h2v1h-2zM13 29h1v1h-1zM18 29h1v1h-1zM21 29h1v1h-1zM23 29h4v1h-4zM30 29h4v1h-4zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM10 30h3v1h-3zM19 30h1v1h-1zM22 30h1v1h-1zM24 30h1v1h-1zM26 30h6v1h-6zM33 30h1v1h-1zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM10 31h2v1h-2zM13 31h1v1h-1zM15 31h2v1h-2zM18 31h1v1h-1zM21 31h4v1h-4zM26 31h2v1h-2zM30 31h2v1h-2zM33 31h2v1h-2zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM10 32h2v1h-2zM15 32h6v1h-6zM23 32h2v1h-2zM26 32h4v1h-4zM31 32h1v1h-1zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h2v1h-2zM15 33h1v1h-1zM20 33h2v1h-2zM23 33h3v1h-3zM30 33h1v1h-1zM32 33h1v1h-1zM2 34h7v1h-7zM10 34h2v1h-2zM14 34h1v1h-1zM16 34h2v1h-2zM19 34h2v1h-2zM22 34h1v1h-1zM24 34h3v1h-3zM28 34h2v1h-2zM33 34h1v1h-1z"}, "sumeeko": {"n": 37, "d": "M2 2h7v1h-7zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM18 2h1v1h-1zM21 2h3v1h-3zM25 2h1v1h-1zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM12 3h1v1h-1zM17 3h2v1h-2zM20 3h1v1h-1zM22 3h2v1h-2zM26 3h1v1h-1zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h5v1h-5zM16 4h1v1h-1zM18 4h1v1h-1zM23 4h4v1h-4zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h1v1h-1zM12 5h3v1h-3zM20 5h2v1h-2zM24 5h1v1h-1zM26 5h1v1h-1zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM16 6h3v1h-3zM22 6h2v1h-2zM25 6h1v1h-1zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM14 7h2v1h-2zM21 7h1v1h-1zM23 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM10 9h2v1h-2zM13 9h2v1h-2zM16 9h1v1h-1zM18 9h1v1h-1zM20 9h6v1h-6zM2 10h1v1h-1zM4 10h5v1h-5zM11 10h2v1h-2zM15 10h2v1h-2zM19 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM28 10h5v1h-5zM2 11h1v1h-1zM5 11h3v1h-3zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h2v1h-2zM19 11h5v1h-5zM25 11h1v1h-1zM28 11h2v1h-2zM31 11h2v1h-2zM34 11h1v1h-1zM3 12h2v1h-2zM6 12h1v1h-1zM8 12h3v1h-3zM15 12h5v1h-5zM22 12h1v1h-1zM27 12h2v1h-2zM30 12h1v1h-1zM32 12h2v1h-2zM2 13h3v1h-3zM6 13h1v1h-1zM9 13h7v1h-7zM18 13h7v1h-7zM27 13h1v1h-1zM30 13h4v1h-4zM2 14h1v1h-1zM5 14h1v1h-1zM7 14h3v1h-3zM16 14h1v1h-1zM18 14h1v1h-1zM24 14h1v1h-1zM26 14h2v1h-2zM29 14h3v1h-3zM33 14h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM10 15h5v1h-5zM17 15h1v1h-1zM19 15h2v1h-2zM23 15h3v1h-3zM28 15h1v1h-1zM31 15h4v1h-4zM3 16h1v1h-1zM5 16h1v1h-1zM8 16h11v1h-11zM20 16h1v1h-1zM22 16h1v1h-1zM27 16h2v1h-2zM30 16h4v1h-4zM2 17h2v1h-2zM6 17h1v1h-1zM9 17h1v1h-1zM13 17h1v1h-1zM15 17h3v1h-3zM20 17h5v1h-5zM27 17h3v1h-3zM31 17h2v1h-2zM2 18h1v1h-1zM4 18h1v1h-1zM8 18h1v1h-1zM12 18h1v1h-1zM15 18h1v1h-1zM17 18h1v1h-1zM19 18h1v1h-1zM21 18h1v1h-1zM24 18h4v1h-4zM29 18h2v1h-2zM34 18h1v1h-1zM2 19h2v1h-2zM6 19h2v1h-2zM9 19h1v1h-1zM13 19h3v1h-3zM18 19h1v1h-1zM21 19h3v1h-3zM25 19h1v1h-1zM27 19h3v1h-3zM31 19h2v1h-2zM34 19h1v1h-1zM3 20h1v1h-1zM5 20h1v1h-1zM7 20h3v1h-3zM12 20h1v1h-1zM15 20h4v1h-4zM20 20h1v1h-1zM23 20h2v1h-2zM26 20h1v1h-1zM29 20h2v1h-2zM32 20h2v1h-2zM3 21h2v1h-2zM9 21h2v1h-2zM14 21h1v1h-1zM17 21h1v1h-1zM21 21h3v1h-3zM26 21h2v1h-2zM29 21h5v1h-5zM3 22h6v1h-6zM10 22h3v1h-3zM14 22h3v1h-3zM20 22h2v1h-2zM24 22h4v1h-4zM30 22h2v1h-2zM33 22h2v1h-2zM2 23h1v1h-1zM4 23h1v1h-1zM6 23h1v1h-1zM10 23h3v1h-3zM14 23h5v1h-5zM21 23h1v1h-1zM25 23h4v1h-4zM34 23h1v1h-1zM2 24h1v1h-1zM5 24h1v1h-1zM7 24h2v1h-2zM10 24h2v1h-2zM13 24h3v1h-3zM22 24h3v1h-3zM26 24h1v1h-1zM31 24h1v1h-1zM33 24h1v1h-1zM2 25h1v1h-1zM4 25h1v1h-1zM9 25h2v1h-2zM14 25h2v1h-2zM18 25h1v1h-1zM23 25h1v1h-1zM27 25h2v1h-2zM30 25h5v1h-5zM2 26h2v1h-2zM7 26h2v1h-2zM10 26h1v1h-1zM12 26h1v1h-1zM15 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM24 26h1v1h-1zM26 26h5v1h-5zM10 27h1v1h-1zM13 27h3v1h-3zM18 27h4v1h-4zM26 27h1v1h-1zM30 27h1v1h-1zM32 27h1v1h-1zM34 27h1v1h-1zM2 28h7v1h-7zM12 28h1v1h-1zM17 28h1v1h-1zM19 28h1v1h-1zM22 28h1v1h-1zM24 28h3v1h-3zM28 28h1v1h-1zM30 28h1v1h-1zM32 28h2v1h-2zM2 29h1v1h-1zM8 29h1v1h-1zM10 29h1v1h-1zM14 29h2v1h-2zM18 29h4v1h-4zM23 29h4v1h-4zM30 29h4v1h-4zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM10 30h3v1h-3zM15 30h2v1h-2zM18 30h1v1h-1zM22 30h1v1h-1zM24 30h1v1h-1zM26 30h6v1h-6zM33 30h1v1h-1zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM10 31h2v1h-2zM14 31h1v1h-1zM17 31h1v1h-1zM20 31h5v1h-5zM26 31h2v1h-2zM30 31h2v1h-2zM33 31h2v1h-2zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM10 32h3v1h-3zM17 32h4v1h-4zM23 32h2v1h-2zM26 32h4v1h-4zM31 32h1v1h-1zM2 33h1v1h-1zM8 33h1v1h-1zM12 33h1v1h-1zM14 33h2v1h-2zM17 33h1v1h-1zM20 33h2v1h-2zM23 33h3v1h-3zM30 33h1v1h-1zM32 33h1v1h-1zM2 34h7v1h-7zM10 34h1v1h-1zM12 34h4v1h-4zM17 34h1v1h-1zM19 34h2v1h-2zM22 34h1v1h-1zM24 34h3v1h-3zM28 34h2v1h-2zM33 34h1v1h-1z"}, "garden": {"n": 37, "d": "M2 2h7v1h-7zM11 2h9v1h-9zM21 2h3v1h-3zM25 2h1v1h-1zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM15 3h5v1h-5zM22 3h3v1h-3zM26 3h1v1h-1zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h3v1h-3zM14 4h2v1h-2zM18 4h1v1h-1zM20 4h1v1h-1zM23 4h1v1h-1zM25 4h2v1h-2zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h3v1h-3zM16 5h1v1h-1zM18 5h4v1h-4zM24 5h1v1h-1zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM17 6h1v1h-1zM20 6h4v1h-4zM25 6h1v1h-1zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h2v1h-2zM14 7h1v1h-1zM17 7h2v1h-2zM22 7h2v1h-2zM26 7h1v1h-1zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM10 9h2v1h-2zM14 9h1v1h-1zM17 9h1v1h-1zM20 9h1v1h-1zM22 9h3v1h-3zM2 10h1v1h-1zM4 10h5v1h-5zM11 10h2v1h-2zM15 10h3v1h-3zM19 10h1v1h-1zM24 10h2v1h-2zM28 10h5v1h-5zM4 11h1v1h-1zM11 11h4v1h-4zM19 11h4v1h-4zM25 11h1v1h-1zM28 11h2v1h-2zM31 11h2v1h-2zM34 11h1v1h-1zM2 12h1v1h-1zM4 12h3v1h-3zM8 12h6v1h-6zM17 12h3v1h-3zM22 12h2v1h-2zM30 12h1v1h-1zM32 12h2v1h-2zM4 13h1v1h-1zM9 13h1v1h-1zM12 13h2v1h-2zM16 13h1v1h-1zM18 13h1v1h-1zM21 13h3v1h-3zM27 13h2v1h-2zM30 13h3v1h-3zM6 14h1v1h-1zM8 14h4v1h-4zM14 14h1v1h-1zM20 14h1v1h-1zM26 14h1v1h-1zM30 14h2v1h-2zM33 14h1v1h-1zM3 15h5v1h-5zM10 15h2v1h-2zM14 15h1v1h-1zM16 15h8v1h-8zM25 15h1v1h-1zM28 15h1v1h-1zM32 15h3v1h-3zM3 16h1v1h-1zM5 16h2v1h-2zM8 16h2v1h-2zM11 16h2v1h-2zM15 16h1v1h-1zM20 16h1v1h-1zM27 16h2v1h-2zM31 16h3v1h-3zM3 17h1v1h-1zM5 17h2v1h-2zM10 17h1v1h-1zM13 17h1v1h-1zM16 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM22 17h3v1h-3zM26 17h3v1h-3zM30 17h3v1h-3zM2 18h1v1h-1zM4 18h1v1h-1zM6 18h4v1h-4zM11 18h4v1h-4zM19 18h1v1h-1zM24 18h1v1h-1zM26 18h2v1h-2zM29 18h3v1h-3zM34 18h1v1h-1zM2 19h2v1h-2zM5 19h1v1h-1zM9 19h3v1h-3zM14 19h3v1h-3zM18 19h2v1h-2zM21 19h2v1h-2zM25 19h1v1h-1zM27 19h3v1h-3zM31 19h2v1h-2zM34 19h1v1h-1zM2 20h3v1h-3zM8 20h1v1h-1zM10 20h2v1h-2zM13 20h2v1h-2zM16 20h4v1h-4zM23 20h2v1h-2zM26 20h5v1h-5zM32 20h2v1h-2zM4 21h2v1h-2zM7 21h1v1h-1zM11 21h7v1h-7zM19 21h6v1h-6zM26 21h2v1h-2zM29 21h4v1h-4zM34 21h1v1h-1zM2 22h2v1h-2zM6 22h1v1h-1zM8 22h3v1h-3zM12 22h2v1h-2zM18 22h1v1h-1zM21 22h1v1h-1zM23 22h5v1h-5zM29 22h3v1h-3zM33 22h2v1h-2zM2 23h1v1h-1zM4 23h4v1h-4zM10 23h1v1h-1zM14 23h1v1h-1zM17 23h1v1h-1zM20 23h3v1h-3zM25 23h1v1h-1zM27 23h1v1h-1zM29 23h1v1h-1zM32 23h1v1h-1zM34 23h1v1h-1zM2 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM10 24h2v1h-2zM14 24h5v1h-5zM23 24h2v1h-2zM29 24h2v1h-2zM33 24h1v1h-1zM2 25h1v1h-1zM5 25h2v1h-2zM9 25h1v1h-1zM11 25h1v1h-1zM14 25h1v1h-1zM16 25h2v1h-2zM21 25h1v1h-1zM23 25h1v1h-1zM27 25h2v1h-2zM30 25h3v1h-3zM34 25h1v1h-1zM2 26h4v1h-4zM8 26h1v1h-1zM13 26h1v1h-1zM15 26h3v1h-3zM19 26h1v1h-1zM24 26h1v1h-1zM26 26h5v1h-5zM33 26h1v1h-1zM10 27h1v1h-1zM12 27h4v1h-4zM18 27h1v1h-1zM20 27h2v1h-2zM23 27h1v1h-1zM26 27h1v1h-1zM30 27h1v1h-1zM32 27h1v1h-1zM34 27h1v1h-1zM2 28h7v1h-7zM12 28h1v1h-1zM14 28h1v1h-1zM17 28h1v1h-1zM20 28h1v1h-1zM22 28h1v1h-1zM24 28h3v1h-3zM28 28h1v1h-1zM30 28h1v1h-1zM32 28h2v1h-2zM2 29h1v1h-1zM8 29h1v1h-1zM10 29h2v1h-2zM13 29h1v1h-1zM15 29h1v1h-1zM18 29h1v1h-1zM21 29h1v1h-1zM23 29h4v1h-4zM30 29h4v1h-4zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM10 30h2v1h-2zM13 30h1v1h-1zM16 30h1v1h-1zM20 30h1v1h-1zM22 30h1v1h-1zM24 30h1v1h-1zM26 30h6v1h-6zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM10 31h1v1h-1zM12 31h7v1h-7zM21 31h3v1h-3zM26 31h2v1h-2zM30 31h5v1h-5zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM10 32h1v1h-1zM14 32h2v1h-2zM19 32h2v1h-2zM22 32h3v1h-3zM26 32h4v1h-4zM31 32h2v1h-2zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h1v1h-1zM13 33h4v1h-4zM18 33h1v1h-1zM20 33h1v1h-1zM23 33h2v1h-2zM27 33h1v1h-1zM30 33h3v1h-3zM2 34h7v1h-7zM10 34h1v1h-1zM12 34h1v1h-1zM19 34h2v1h-2zM22 34h1v1h-1zM24 34h6v1h-6zM33 34h1v1h-1z"}, "steam": {"n": 37, "d": "M2 2h7v1h-7zM10 2h2v1h-2zM15 2h2v1h-2zM18 2h2v1h-2zM21 2h3v1h-3zM25 2h1v1h-1zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM12 3h4v1h-4zM18 3h1v1h-1zM20 3h1v1h-1zM24 3h2v1h-2zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM11 4h3v1h-3zM17 4h1v1h-1zM19 4h1v1h-1zM21 4h1v1h-1zM24 4h2v1h-2zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h2v1h-2zM13 5h2v1h-2zM16 5h1v1h-1zM18 5h1v1h-1zM21 5h2v1h-2zM24 5h1v1h-1zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM11 6h4v1h-4zM16 6h1v1h-1zM19 6h1v1h-1zM22 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM20 7h3v1h-3zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM10 9h1v1h-1zM12 9h3v1h-3zM19 9h1v1h-1zM22 9h1v1h-1zM24 9h1v1h-1zM2 10h1v1h-1zM4 10h2v1h-2zM7 10h3v1h-3zM11 10h4v1h-4zM16 10h1v1h-1zM18 10h4v1h-4zM23 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM31 10h1v1h-1zM33 10h2v1h-2zM4 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM12 11h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM20 11h4v1h-4zM25 11h1v1h-1zM28 11h2v1h-2zM31 11h2v1h-2zM34 11h1v1h-1zM3 12h2v1h-2zM7 12h2v1h-2zM10 12h3v1h-3zM16 12h1v1h-1zM18 12h2v1h-2zM24 12h8v1h-8zM33 12h2v1h-2zM4 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM11 13h1v1h-1zM13 13h5v1h-5zM20 13h1v1h-1zM22 13h1v1h-1zM26 13h1v1h-1zM29 13h1v1h-1zM31 13h1v1h-1zM4 14h2v1h-2zM7 14h3v1h-3zM13 14h1v1h-1zM20 14h1v1h-1zM24 14h1v1h-1zM27 14h1v1h-1zM29 14h3v1h-3zM2 15h1v1h-1zM4 15h1v1h-1zM6 15h2v1h-2zM10 15h1v1h-1zM13 15h2v1h-2zM18 15h1v1h-1zM20 15h1v1h-1zM26 15h2v1h-2zM29 15h1v1h-1zM32 15h2v1h-2zM2 16h2v1h-2zM5 16h4v1h-4zM10 16h1v1h-1zM12 16h2v1h-2zM15 16h4v1h-4zM23 16h2v1h-2zM26 16h1v1h-1zM28 16h1v1h-1zM30 16h2v1h-2zM2 17h3v1h-3zM7 17h1v1h-1zM11 17h2v1h-2zM15 17h1v1h-1zM18 17h1v1h-1zM20 17h5v1h-5zM26 17h3v1h-3zM32 17h1v1h-1zM2 18h1v1h-1zM4 18h2v1h-2zM8 18h1v1h-1zM10 18h1v1h-1zM12 18h3v1h-3zM16 18h2v1h-2zM20 18h5v1h-5zM27 18h2v1h-2zM30 18h3v1h-3zM4 19h4v1h-4zM9 19h3v1h-3zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h2v1h-2zM22 19h5v1h-5zM28 19h1v1h-1zM30 19h2v1h-2zM33 19h2v1h-2zM3 20h2v1h-2zM6 20h3v1h-3zM11 20h1v1h-1zM13 20h1v1h-1zM17 20h3v1h-3zM23 20h2v1h-2zM26 20h1v1h-1zM29 20h2v1h-2zM32 20h2v1h-2zM2 21h2v1h-2zM5 21h1v1h-1zM9 21h1v1h-1zM13 21h2v1h-2zM21 21h1v1h-1zM24 21h2v1h-2zM30 21h1v1h-1zM33 21h2v1h-2zM2 22h5v1h-5zM8 22h1v1h-1zM15 22h1v1h-1zM17 22h1v1h-1zM20 22h1v1h-1zM22 22h6v1h-6zM31 22h2v1h-2zM2 23h1v1h-1zM6 23h2v1h-2zM12 23h2v1h-2zM15 23h3v1h-3zM20 23h1v1h-1zM25 23h1v1h-1zM28 23h1v1h-1zM31 23h1v1h-1zM34 23h1v1h-1zM4 24h2v1h-2zM7 24h2v1h-2zM10 24h1v1h-1zM12 24h2v1h-2zM15 24h2v1h-2zM18 24h3v1h-3zM24 24h3v1h-3zM28 24h1v1h-1zM30 24h1v1h-1zM33 24h2v1h-2zM3 25h4v1h-4zM9 25h4v1h-4zM14 25h3v1h-3zM18 25h1v1h-1zM20 25h2v1h-2zM24 25h2v1h-2zM28 25h1v1h-1zM30 25h2v1h-2zM33 25h1v1h-1zM2 26h3v1h-3zM7 26h4v1h-4zM13 26h1v1h-1zM17 26h1v1h-1zM19 26h1v1h-1zM24 26h1v1h-1zM26 26h5v1h-5zM10 27h4v1h-4zM17 27h3v1h-3zM21 27h3v1h-3zM25 27h2v1h-2zM30 27h2v1h-2zM2 28h7v1h-7zM10 28h1v1h-1zM12 28h2v1h-2zM15 28h1v1h-1zM18 28h1v1h-1zM21 28h3v1h-3zM25 28h2v1h-2zM28 28h1v1h-1zM30 28h1v1h-1zM2 29h1v1h-1zM8 29h1v1h-1zM10 29h5v1h-5zM18 29h1v1h-1zM21 29h1v1h-1zM23 29h4v1h-4zM30 29h3v1h-3zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM11 30h1v1h-1zM15 30h1v1h-1zM17 30h1v1h-1zM19 30h1v1h-1zM22 30h1v1h-1zM25 30h6v1h-6zM32 30h3v1h-3zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM10 31h1v1h-1zM12 31h2v1h-2zM15 31h2v1h-2zM20 31h3v1h-3zM24 31h1v1h-1zM29 31h1v1h-1zM31 31h2v1h-2zM34 31h1v1h-1zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM10 32h7v1h-7zM19 32h3v1h-3zM23 32h2v1h-2zM26 32h4v1h-4zM31 32h1v1h-1zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h1v1h-1zM13 33h1v1h-1zM15 33h5v1h-5zM21 33h1v1h-1zM24 33h1v1h-1zM26 33h2v1h-2zM29 33h2v1h-2zM34 33h1v1h-1zM2 34h7v1h-7zM10 34h1v1h-1zM12 34h8v1h-8zM22 34h2v1h-2zM25 34h1v1h-1zM30 34h3v1h-3z"}};
+const LINKS = {
+  suno:'https://www.youtube.com/watch?v=2WQWwrNUeC0',
+  chatpdf:'https://www.chatpdf.com/zh-TW/c/jhB1beGIMcq7G3HRzruy0',
+  notebooklm:'https://notebook.google.com/notebook/ef0c6a1e-c2b2-48bf-a79a-bda16391228b',
+  sumeeko_analysis:'https://spheracles.github.io/sumeeko-smart-factory/analysis/',
+  sumeeko:'https://spheracles.github.io/sumeeko-smart-factory/',
+  garden:'https://spheracles.github.io/Pandaren-s-Wealth-Garden/',
+  steam:'https://spheracles.github.io/steam-order-system/'
+};
+// zone rectangles in image pixels, measured on the 1672×941 illustration
+const ZONES = {
+  1:{name:'中央指揮工作站', en:'Central Command Workstation', rect:[500,345,640,350], chip:[825,398], side:'right'},
+  2:{name:'AI 研究與模型實驗區', en:'AI Lab / Model Experiment Zone', rect:[10,510,490,250], chip:[258,576], side:'right'},
+  3:{name:'視覺創作與插畫繪製區', en:'Visual Art & Illustration', rect:[1150,285,515,190], chip:[1428,338], side:'left'},
+  4:{name:'文案寫作與編輯企劃區', en:'Copywriting & Editorial Planning', rect:[1170,95,495,190], chip:[1448,155], side:'left'},
+  5:{name:'遊戲開發與互動設計區', en:'Game Development & Interactive Design', rect:[105,160,345,165], chip:[258,216], side:'right'},
+  6:{name:'網站開發與系統整合區', en:'Web Development & Systems Integration', rect:[20,330,470,180], chip:[283,383], side:'right'},
+  7:{name:'3D 列印與原型製作區', en:'3D Printing & Prototyping', rect:[1160,485,505,195], chip:[1448,560], side:'left'},
+  8:{name:'展示交流與發表區', en:'Presentation Lounge & Showcase', rect:[600,100,410,200], chip:[828,143], side:'right'},
+  9:{name:'生活與設施支援區', en:'Utility & Lifestyle Support', rect:[995,665,677,276], chip:[1405,755], side:'left'}
+};
+const STAGE_OF = {1:1, 4:2, 2:2, 6:3, 7:3, 5:3, 9:3, 3:3};
+const CHAPTERS = [
+  {name:'入口', from:0, to:0},
+  {name:'工具入門', from:1, to:3},
+  {name:'智慧研究', from:4, to:6},
+  {name:'專案實作', from:7, to:9},
+  {name:'學習總結', from:10, to:10}
+];
+
+/* ---------- content helpers ---------- */
+const zn = n => `<span class="zn">${n}</span>`;
+const ext = `<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const qrSvg = k => `<svg viewBox="0 0 ${QR[k].n} ${QR[k].n}" role="img" aria-label="QR Code" shape-rendering="crispEdges"><rect width="${QR[k].n}" height="${QR[k].n}" fill="#fff"/><path d="${QR[k].d}" fill="#0b1226"/></svg>`;
+const link = (k, html, cls) => `<a class="${cls}" href="${LINKS[k]}" target="_blank" rel="noopener">${html}</a>`;
+const flow = (items, cls = '') => `<ol class="flow ${cls}">${items.map(it => `<li>${it[0] ? `<span class="fl-k">${it[0]}</span>` : ''}<b>${it[1]}</b>${it[2] ? `<small>${it[2]}</small>` : ''}</li>`).join('')}</ol>`;
+const blk = (title, inner, extra = '') => `<section class="blk"><h3 class="blk-t">${title}${extra}</h3>${inner}</section>`;
+const note = t => `<p class="note">${t}</p>`;
+const cta = (k, tag, btn, domain) => `<div class="cta">${link(k, qrSvg(k), 'cta-qr')}<div class="cta-t"><span class="cta-tag">${tag}</span>${link(k, btn + ext, 'btn-primary')}<span class="cta-d">${domain}｜掃描 QR Code 或點擊按鈕</span></div></div>`;
+const tool = (kind, name, desc, k, extra) => `<article class="tool"><span class="k">${kind}</span><span class="n">${name}</span><p>${desc}</p>${extra ? `<span class="x">${extra}</span>` : ''}${k ? `<div class="acts">${link(k, '開啟成果' + ext, 'btn-sm')}<button class="btn-qr" type="button" aria-expanded="false" data-qr>QR</button></div><div class="qr-pop" hidden>${qrSvg(k)}<button type="button" data-qr-close>收起</button></div>` : ''}</article>`;
+const icon = {
+  gear:`<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="12" fill="none" stroke="#f3b867" stroke-width="6" stroke-dasharray="4.2 3.3"/><circle cx="20" cy="20" r="9" fill="none" stroke="#f3b867" stroke-width="2.5"/><circle cx="20" cy="20" r="3" fill="#f3b867"/></svg>`,
+  steam:`<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="25" width="26" height="9" rx="2" fill="none" stroke="#f3b867" stroke-width="2.4"/><path d="M14 22c-3-3 3-5 0-9M20 22c-3-3 3-5 0-9M26 22c-3-3 3-5 0-9" fill="none" stroke="#ffe2b0" stroke-width="2" stroke-linecap="round"/></svg>`,
+  gauge:`<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 28a13 13 0 0 1 26 0" fill="none" stroke="#f3b867" stroke-width="2.6" stroke-linecap="round"/><path d="M20 28l7-9" stroke="#ffe2b0" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="28" r="2.6" fill="#f3b867"/><path d="M10 21l2 1.4M20 15v2.4M30 21l-2 1.4" stroke="#f3b867" stroke-width="2" stroke-linecap="round"/></svg>`,
+  lever:`<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="9" y="29" width="22" height="5" rx="2" fill="none" stroke="#f3b867" stroke-width="2.4"/><path d="M20 29 27 10" stroke="#f3b867" stroke-width="2.6" stroke-linecap="round"/><circle cx="27.5" cy="9" r="4" fill="#ffe2b0"/></svg>`
+};
+
+const STOPS = [
+  { id:'entrance', zone:null, chapter:0, kind:'cover' },
+  { id:'toolbox', zone:1, chapter:1, step:'STEP 01', code:'AI TOOLBOX', no:'01',
+    title:'從 AI 工具入門開始',
+    lead:'四種工具、三個成果入口：先看見 AI 的不同能力，再開始動手做。',
+    why:'多螢幕的指揮台同時開著四種 AI 工具，是整段旅程的起點。',
+    body:() => `<div class="tools">
+      ${tool('AI 音樂生成','SUNO','用文字決定曲風、主題、歌詞與氛圍','suno')}
+      ${tool('縮放式簡報','Prezi','利用宏觀視圖與局部放大串接故事',null,'本站的縮放導覽也延伸自這個概念')}
+      ${tool('PDF 對話研究','ChatPDF','飲食指南：脂肪、碳水與健康論述的資料探討','chatpdf')}
+      ${tool('來源型知識整理','NotebookLM','依據文件摘要、問答、導讀與學習筆記','notebooklm')}
+    </div><p class="hint">建議現場演示｜連結與 QR Code 可開啟</p>` },
+  { id:'prompt', zone:4, chapter:1, step:'STEP 02', code:'PROMPT ENGINEERING', no:'02',
+    title:'從普通提問，到專業研究指令',
+    lead:'學會的不是堆砌術語，而是清楚定義問題、資料與驗證方式。',
+    why:'編輯企劃的功夫，用在把一句提問改寫成一份完整的研究指令。',
+    body:() => `<div class="compare">
+      <div class="cmp before"><span class="cmp-k">BEFORE</span><p class="q">「請幫我分析世德工業。」</p><small>問題寬泛，容易只有百科式摘要</small></div>
+      <div class="cmp after"><span class="cmp-k">AFTER</span><p class="q">「以麥肯錫式問題拆解分析世德工業，區分事實與推論，附上公開來源。」</p></div>
+    </div>
+    ${blk('<span class="cn">專業 Prompt 的 7 個核心元素</span>', `<ol class="elems">${['角色','任務','背景','框架','來源','格式','限制'].map((t,i) => `<li><b>${i+1}</b>${t}</li>`).join('')}</ol>`)}` },
+  { id:'research', zone:2, chapter:1, step:'STEP 03', code:'MULTI-AI RESEARCH', no:'03',
+    title:'ChatGPT × Gemini × 專業角色扮演',
+    lead:'先建立研究框架，再以多個模擬專業視角交叉檢視世德工業。',
+    why:'實驗區讓不同模型分工：一個拆題、一個深研、一組角色交叉比較。',
+    body:() => `${flow([['01 / 設計','ChatGPT','拆解問題、訂框架'],['02 / 研究','Gemini Deep Research','深度蒐集、交叉整理'],['03 / 比較','角色認知模型','五種專業分析視角']])}
+    ${blk('<span class="cn">模擬的五個分析視角</span>', `<ol class="lst">${['車用供應鏈與策略','汽車零組件產業','企業財務','跨國併購與營運','投資機構策略'].map((t,i) => `<li><span>0${i+1}</span>${t}</li>`).join('')}</ol>`)}
+    ${note('注意：專業角色是 AI 模擬的觀點，不代表真人專家背書；結論仍須核對公開資料。')}` },
+  { id:'web', zone:6, chapter:2, step:'STEP 04', code:'RESEARCH → WEB', no:'04',
+    title:'世德工業研究：從 PDF 到互動網站',
+    lead:'將跨角色研究成果轉換成可探索的企業介紹介面。',
+    why:'網站開發區把整份研究 PDF 整合成一個可以點選探索的網站。',
+    body:() => `${blk('Pipeline', flow([['','ChatGPT 拆題'],['','Gemini 深研'],['','角色分析'],['','PDF 彙整'],['','Claude 網站']], 'pills'))}
+    ${blk('<span class="cn">網站內容的五個探索入口</span>', `<ol class="lst">${['企業沿革與全球布局','高階車用扣件產品','冷鍛／熱處理與品質','專利與研發能力','供應鏈與策略挑戰'].map((t,i) => `<li><span>0${i+1}</span>${t}</li>`).join('')}</ol>`)}
+    ${note('資料來源：公開資訊與 AI 研究整理；重要結論須回查原始文件。')}
+    ${cta('sumeeko_analysis','成果 01 / 企業研究','開啟世德介紹網站','spheracles.github.io')}` },
+  { id:'factory', zone:7, chapter:2, step:'STEP 05', code:'SMART FACTORY', no:'05',
+    title:'世德職涯 App：2.5D 工廠與機台安全',
+    lead:'以 A1～C3 九宮格工廠，模擬設備操作、資訊面板與安全狀態。',
+    why:'原型工坊裡的機台與工具牆，正好對照九宮格車間的設備與安全流程。',
+    body:() => `<div class="sim" id="sim">
+      ${blk('九宮格車間 / 2.5D ZONE', `<ol class="grid9">${[['A1','盤元備料'],['A2','抽線設備'],['A3','冷鍛機'],['B1','搓牙機'],['B2','熱處理'],['B3','表面處理'],['C1','光學檢測'],['C2','品管人員'],['C3','出貨區']].map(c => `<li><span>${c[0]}</span><b>${c[1]}</b></li>`).join('')}</ol>`)}
+      ${blk('<span class="cn">七台設備 × 狀態流程</span>', `<ol class="states">${['待機','準備','運轉','檢驗','完成'].map(s => `<li>${s}</li>`).join('')}</ol>
+        <ul class="exc"><li class="w">暫停</li><li class="w">警告</li><li class="a">故障</li><li class="w">保養上鎖掛牌</li><li class="a estop-chip">緊急停止</li></ul>
+        <button class="estop" type="button" aria-pressed="false" id="estop"><span class="estop-dot" aria-hidden="true"></span><span id="estopL">按下緊急停止</span></button>`, '<span class="tag-demo">互動示意</span>')}
+      </div>
+      ${note('急停後停止動畫與操作；確認危險排除才能復歸（教學模擬）。')}` },
+  { id:'sumeeko', zone:5, chapter:2, step:'STEP 06', code:'INTERACTIVE WORK', no:'06',
+    title:'《SUMEEKO：智慧工廠》｜線上互動展示',
+    lead:'從工件檢視、教學任務到職涯探索，讓製造流程可被體驗。',
+    why:'遊戲與互動設計區把製造流程做成任務、角色與挑戰。',
+    body:() => `<span class="spec">設計規格／實際功能以現場操作為準</span>
+    ${blk('<span class="cn">工件 3D 檢視</span>', `<ul class="tags hot">${['螺紋','螺帽','套管','盤元'].map(t => `<li>${t}</li>`).join('')}</ul><ul class="feat">${['360° 旋轉','剖面／半透明','材質切換','製程對照'].map(t => `<li>${t}</li>`).join('')}</ul>`)}
+    <div class="stats">${[[7,'個教學單元'],[5,'項任務挑戰'],[11,'種工具'],[6,'種職業角色']].map(s => `<div class="stat"><b data-count="${s[0]}">${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+    ${blk('<span class="cn">任務流程</span>', flow([['','選工件'],['','點檢'],['','設定參數'],['','製程'],['','量測'],['','紀錄']], 'pills') + `<ul class="tags" style="margin-top:10px"><li>生存戰與鳳凰計畫</li></ul>`)}
+    ${cta('sumeeko','成果 02 / 智慧工廠','開啟智慧工廠 App','spheracles.github.io')}` },
+  { id:'garden', zone:9, chapter:3, step:'STEP 07', code:'DALSON / REQUIREMENTS', no:'07',
+    title:'劉虔瑋老師｜《財富花園》',
+    lead:'透過 AI 反向訪談先建立規格，再將資源管理概念發展為線上展示。',
+    why:'生活支援區照顧日常的金錢、時間與心力，正是財富花園培育的三種資源。',
+    body:() => `${blk('<span class="cn">先訪談，後規格，再實作</span>', `<div class="stats">${[[14,'輪需求訪談'],[55,'項確認決策'],[3,'種核心資源']].map(s => `<div class="stat"><b data-count="${s[0]}">${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`)}
+    <div class="res"><b>金錢</b><i>×</i><b>時間</b><i>×</i><b>心力</b></div>
+    <p class="principle">AI 提出資源培育建議，由使用者確認後再執行；權限、例外與驗收需先定義。</p>
+    ${cta('garden','成果 03 / 財富花園','開啟 Wealth Garden','spheracles.github.io')}` },
+  { id:'press', zone:3, chapter:3, step:'STEP 08', code:'HYDRA / OPERATIONS', no:'08',
+    title:'夏承樟老師｜《訂單管理蒸汽印刷機》',
+    lead:'將 Excel 工作流程轉變成具復古工業風格的互動管理介面。',
+    why:'視覺創作區替訂單流程定出一套黃銅、齒輪與蒸汽的復古工業語言。',
+    body:() => `${blk('DATA IN → INSIGHT OUT', flow([['01','匯入','Excel / CSV'],['02','篩選','客戶 / 訂單'],['03','追蹤','出貨 / 未交付'],['04','匯出','報表 / 備份']]))}
+    ${blk('<span class="cn">視覺識別</span>', `<ul class="vis"><li>${icon.gear}黃銅齒輪</li><li>${icon.steam}蒸汽機械</li><li>${icon.gauge}工業儀表</li><li>${icon.lever}操作拉桿</li></ul>`)}
+    ${note('功能狀態依現場網站與實際測試為準。')}
+    ${cta('steam','成果 04 / 訂單管理','開啟蒸汽印刷機','spheracles.github.io')}` },
+  { id:'ritual', zone:8, chapter:3, step:'STEP 09', code:'COGNITIVE SIMULATION', no:'09',
+    title:'吳俊傑老師｜「AI 降乩儀式」',
+    lead:'人物認知蒸餾與心智模型模擬：從模仿語氣，走向模擬判斷架構。',
+    why:'展示交流區請模擬的專家視角上台，與團隊交換對世德工業的品質看法。',
+    body:() => `${flow([['1','公開資料'],['2','認知蒸餾'],['3','心智建模'],['4','情境模擬'],['5','觀點驗證']], 'pills')}
+    ${blk('<span class="cn">應用案例</span>', `<p class="case">以狩野紀昭（Noriaki Kano）的品質觀點，重新思考世德工業。</p><ol class="ladder"><li>品質管制（QC）</li><li>品質管理（QM）</li><li>品質創造（Quality Creation）</li></ol>`)}
+    ${note('※ 這是基於公開資料的角色觀點模擬，並非本人授權、背書或意識復原。')}` },
+  { id:'summary', zone:null, chapter:4, kind:'summary' }
+];
+
+const zoneStop = {}; STOPS.forEach((s, i) => { if (s.zone) zoneStop[s.zone] = i; });
+
+function renderCover(){
+  const chips = CHAPTERS.slice(1).map((c, ci) => {
+    const zs = c.from === c.to && c.from === 10 ? '<span class="wide">回到全景</span>' : STOPS.slice(c.from, c.to + 1).map(s => zn(s.zone)).join('');
+    const range = c.from === 10 ? 'FINAL' : `STEP 0${c.from}–0${c.to}`;
+    return `<button class="chap" type="button" data-go="${c.from}"><span class="k">${range}</span><b>${c.name}</b><span class="zs">${zs}</span></button>`;
+  }).join('');
+  return `<div class="sheet-grip"></div><div class="band-grid">
+    <div style="--i:0">
+      <div class="p-eyebrow" style="margin-top:0">AI LEARNING JOURNEY / 2026.11</div>
+      <h1 class="cover-t" style="margin-top:10px">AI 學習旅程</h1>
+      <p class="cover-s">車用 AI 人才培訓專班・期中成果</p>
+      <p class="cover-p">推門走進蒼穹創意科技工作坊。九個工作區依序展開兩個月的學習成果，從工具入門一路走到專案實作。</p>
+    </div>
+    <div style="--i:1">
+      <div class="chapters">${chips}</div>
+      <div class="band-actions"><button class="btn-primary" type="button" data-go="1">開始導覽${ext}</button><span class="hint">${isMobile ? '左右滑動或點下方箭頭切換' : '鍵盤 ← → 切換，也可以直接點選場景裡的區域'}</span></div>
+    </div>
+  </div>`;
+}
+function renderSummary(){
+  const st = [
+    ['01','認識 AI','Suno · Prezi<br>ChatPDF · NotebookLM',[1]],
+    ['02','協作 AI','Prompt · Gemini 研究<br>ChatGPT × Claude',[4,2]],
+    ['03','實踐 AI','世德互動網站 · 職涯 App<br>財富花園 · 訂單管理',[6,7,5,9,3]]
+  ];
+  return `<div class="sheet-grip"></div><div class="band-grid">
+    <div style="--i:0">
+      <div class="p-eyebrow" style="margin-top:0">FINAL · LEARNING REFLECTION</div>
+      <div class="p-head"><span class="p-no">10</span><h2>兩個月的學習總結</h2></div>
+      <p class="p-lead">從工具使用者，走向跨模型協作、系統規劃與應用實踐。</p>
+      <p class="p-why" style="margin-top:14px">回到全景：三個學習階段散布在工作坊的各個角落，移到卡片上就會亮起對應區域。</p>
+    </div>
+    <div style="--i:1">
+      <div class="stages">${st.map((s, i) => `<div class="stage" tabindex="0" data-stage="${i+1}"><span class="k">${s[0]}</span><b>${s[1]}</b><p>${s[2]}</p><span class="zs">${s[3].map(zn).join('')}</span></div>`).join('')}</div>
+      <p class="closing">從<em>會使用 AI</em>，到<em>能用 AI 解決問題</em>。</p>
+      <div class="band-actions"><button class="btn-primary" type="button" data-go="1">重新導覽${ext}</button><button class="btn-ghost" type="button" data-go="0">回到入口</button></div>
+    </div>
+  </div>`;
+}
+function renderStop(s, i){
+  if (s.kind === 'cover') return renderCover();
+  if (s.kind === 'summary') return renderSummary();
+  const z = ZONES[s.zone], ch = CHAPTERS[s.chapter];
+  const pos = i - ch.from + 1, tot = ch.to - ch.from + 1;
+  return `<div class="sheet-grip"></div>
+  <div class="p-zone" style="--i:0">${zn(s.zone)}<div><b>${z.name}</b><small>${z.en}</small></div><span class="p-chap">${ch.name} ${pos}/${tot}</span></div>
+  <p class="p-why" style="--i:1">${s.why}</p>
+  <div style="--i:2"><div class="p-eyebrow">${s.step} · ${s.code}</div>
+  <div class="p-head"><span class="p-no">${s.no}</span><h2>${s.title}</h2></div>
+  <p class="p-lead">${s.lead}</p></div>
+  <div class="p-body" style="--i:3">${s.body()}</div>
+  <footer class="p-foot" style="--i:4"><span>車用 AI 人才培訓專班 · 期中學習成果</span><span>AI LEARNING JOURNEY / 2026.11</span></footer>`;
+}
+
+/* ---------- DOM ---------- */
+const $ = id => document.getElementById(id);
+const stage = $('stage'), win = $('win'), sharp = $('sharp'), panel = $('panel');
+const framesEl = $('frames'), hitsEl = $('hits'), tip = $('tip'), miniView = $('miniView');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let isMobile = false, cur = -1, seen = new Set();
+
+sharp.decode ? sharp.decode().then(() => sharp.classList.add('ready')).catch(() => sharp.classList.add('ready')) : sharp.addEventListener('load', () => sharp.classList.add('ready'));
+if (sharp.complete) sharp.classList.add('ready');
+
+const frameEls = {};
+for (const k in ZONES){
+  const z = ZONES[k], [x,y,w,h] = z.rect;
+  const f = document.createElement('div');
+  f.className = 'zf'; f.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+  f.innerHTML = '<i></i><i></i><i></i><i></i>';
+  framesEl.appendChild(f); frameEls[k] = f;
+  const b = document.createElement('button');
+  b.className = 'hit'; b.type = 'button'; b.dataset.zone = k;
+  b.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+  const s = STOPS[zoneStop[k]];
+  b.setAttribute('aria-label', `前往 ${z.name}：${s.step} ${s.title}`);
+  hitsEl.appendChild(b);
+  const c = document.createElement('div');
+  c.className = 'chip'; c.style.left = z.chip[0] + 'px'; c.style.top = z.chip[1] + 'px';
+  c.innerHTML = `<span class="cs">STEP </span>${s.no}`; hitsEl.appendChild(c);
+}
+
+// timeline
+const tl = $('tl');
+tl.innerHTML = CHAPTERS.map((c, ci) => `<div class="grp" data-ch="${ci}"><span class="grp-l">${c.name}</span><div class="nodes">${
+  STOPS.slice(c.from, c.to + 1).map((s, j) => { const i = c.from + j;
+    const label = s.zone ? s.zone : (i === 0 ? '入口' : '總結');
+    const title = s.zone ? `${s.step} ${s.title}` : (i === 0 ? 'AI 學習旅程：入口全景' : '兩個月的學習總結');
+    return `<button class="node${s.zone ? '' : ' wide'}" type="button" data-go="${i}" data-tip="${title}" aria-label="${title}">${label}</button>`; }).join('')
+}</div></div>`).join('');
+
+/* ---------- camera ---------- */
+let M = {};
+function layout(){
+  const VW = innerWidth, VH = innerHeight;
+  isMobile = VW < 760 || VW / VH < 0.95;
+  document.documentElement.classList.toggle('is-mobile', isMobile);
+  const top = isMobile ? 56 : 68, bottom = isMobile ? 66 : 92;
+  const pw = Math.round(Math.min(580, Math.max(360, VW * 0.36)));
+  const sheetH = Math.round(Math.min(VH * 0.54, VH - top - bottom - 150));
+  const r = document.documentElement.style;
+  r.setProperty('--top', top + 'px'); r.setProperty('--bottom', bottom + 'px');
+  r.setProperty('--pw', pw + 'px'); r.setProperty('--sheet-h', sheetH + 'px');
+  M = {VW, VH, top, bottom, pw, sheetH};
+  const sOv = camFor(STOPS[0]).s;
+  stage.style.setProperty('--inv', (1 / sOv).toFixed(4));
+  stage.style.setProperty('--k', (1 / (camNow && !flight ? camNow.s : sOv)).toFixed(4));
+}
+function viewFor(s){
+  const {VW, VH, top, bottom, pw, sheetH} = M;
+  if (isMobile) return {x:0, y:top, w:VW, h:VH - bottom - sheetH - top - 6};
+  if (s.zone == null) return {x:0, y:0, w:VW, h:VH};
+  const g = 22 + 26;
+  return ZONES[s.zone].side === 'right'
+    ? {x:0, y:top, w:VW - pw - g, h:VH - top - bottom}
+    : {x:pw + g, y:top, w:VW - pw - g, h:VH - top - bottom};
+}
+function clampT(s, tx, ty, v){
+  const iw = IW * s, ih = IH * s;
+  if (iw >= v.w) tx = Math.min(v.x, Math.max(v.x + v.w - iw, tx));
+  else tx = v.x + (v.w - iw) / 2;
+  if (ih >= v.h) ty = Math.min(v.y, Math.max(v.y + v.h - ih, ty));
+  else ty = v.y + (v.h - ih) / 2;
+  return [tx, ty];
+}
+function camFor(s){
+  const v = viewFor(s);
+  const coverV = Math.max(v.w / IW, v.h / IH);
+  let sc, fx, fy;
+  if (s.zone == null){
+    sc = isMobile ? Math.min(v.w / IW, v.h / IH) : Math.max(M.VW / IW, M.VH / IH); fx = IW / 2; fy = IH / 2;
+  } else {
+    const [x, y, w, h] = ZONES[s.zone].rect;
+    sc = Math.min(v.w / w, v.h / h) * 0.95;
+    sc = Math.max(coverV, Math.min(sc, isMobile ? 1.7 : 2.6));
+    fx = x + w / 2; fy = y + h / 2;
+  }
+  let [tx, ty] = clampT(sc, v.x + v.w / 2 - fx * sc, v.y + v.h / 2 - fy * sc, v);
+  return {s:sc, tx, ty, v};
+}
+const FULL = {x:0, y:0, w:IW, h:IH};
+const rectFor = s => { if (s.zone == null) return FULL; const [x,y,w,h] = ZONES[s.zone].rect, p = 10; return {x:x-p, y:y-p, w:w+2*p, h:h+2*p}; };
+const lerp = (a, b, t) => a + (b - a) * t;
+const lerpR = (a, b, t) => ({x:lerp(a.x,b.x,t), y:lerp(a.y,b.y,t), w:lerp(a.w,b.w,t), h:lerp(a.h,b.h,t)});
+const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+let camNow = null, rectNow = FULL, flight = null;
+function apply(c, r, now){
+  let {s, tx, ty} = c;
+  if (!reduce && !flight){ // gentle handheld drift while idle
+    const k = now / 1000;
+    const ds = 1 + Math.sin(k / 7.3) * 0.0025;
+    const cx = M.VW / 2, cy = M.VH / 2;
+    tx = cx - (cx - tx) * ds + Math.sin(k / 5.2) * 2.5; ty = cy - (cy - ty) * ds + Math.cos(k / 6.1) * 1.8; s *= ds;
+  }
+  stage.style.transform = `translate3d(${tx.toFixed(2)}px,${ty.toFixed(2)}px,0) scale(${s.toFixed(5)})`;
+  win.style.transform = `translate(${r.x}px,${r.y}px)`; win.style.width = r.w + 'px'; win.style.height = r.h + 'px';
+  win.style.borderRadius = (r === FULL || (r.w >= IW - 1 && r.h >= IH - 1)) ? '0' : '12px';
+  sharp.style.transform = `translate(${-r.x}px,${-r.y}px)`;
+  // minimap viewport
+  const mv = miniView;
+  const mx = -tx / s, my = -ty / s, mw = M.VW / s, mh = M.VH / s, k2 = 112 / IW;
+  mv.style.left = Math.max(0, mx * k2) + 'px'; mv.style.top = Math.max(0, my * k2) + 'px';
+  mv.style.width = Math.min(112, mw * k2) + 'px'; mv.style.height = Math.min(63, mh * k2) + 'px';
+}
+function tick(now){
+  if (flight){
+    const f = flight; let t = (now - f.t0) / f.dur; if (t >= 1) t = 1;
+    const e = ease(t);
+    const v = {x:lerp(f.A.v.x,f.B.v.x,e), y:lerp(f.A.v.y,f.B.v.y,e), w:lerp(f.A.v.w,f.B.v.w,e), h:lerp(f.A.v.h,f.B.v.h,e)};
+    const px = v.x + v.w/2, py = v.y + v.h/2;
+    const fx = lerp(f.FA[0], f.FB[0], e), fy = lerp(f.FA[1], f.FB[1], e);
+    let s = Math.exp(lerp(Math.log(f.A.s), Math.log(f.B.s), e) - f.bump * Math.sin(Math.PI * t));
+    s = Math.max(s, f.floor);
+    let [tx, ty] = clampT(s, px - fx * s, py - fy * s, v);
+    let r = lerpR(f.RA, f.RB, e);
+    if (f.RA !== FULL && f.RB !== FULL) r = lerpR(r, FULL, Math.pow(Math.sin(Math.PI * t), 1.3));
+    camNow = {s, tx, ty, v}; rectNow = r;
+    apply(camNow, r, now);
+    if (t === 1){ camNow = f.B; rectNow = f.RB; flight = null; f.done(); }
+  } else if (camNow) apply(camNow, rectNow, now);
+  requestAnimationFrame(tick);
+}
+function focusOf(c){ const px = c.v.x + c.v.w/2, py = c.v.y + c.v.h/2; return [(px - c.tx) / c.s, (py - c.ty) / c.s]; }
+function fly(B, RB, dur, done){
+  const A = camNow;
+  if (!A || reduce || dur === 0){ camNow = B; rectNow = RB; flight = null; done(); return; }
+  const FA = focusOf(A), FB = focusOf(B);
+  const dist = Math.hypot(FB[0]-FA[0], FB[1]-FA[1]) / IW;
+  const coverFull = Math.max(M.VW / IW, M.VH / IH);
+  flight = {A, B, FA, FB, RA:rectNow, RB, t0:performance.now(), dur:dur ?? (1250 + 750 * Math.min(1, dist * 1.4)),
+    bump: Math.min(0.55, dist * 0.95), floor: Math.min(A.s, B.s, coverFull), done};
+  return flight.dur;
+}
+
+/* ---------- navigation ---------- */
+let simTimer = null, autoTimer = null, auto = false, panelTimer = null;
+function locHTML(s){ return s.zone ? `${zn(s.zone)}${ZONES[s.zone].name}` : (s.kind === 'cover' ? '入口大廳 · 全景' : '全景回望 · 學習總結'); }
+function panelMode(s){ return isMobile ? 'sheet' : (s.zone == null ? 'band' : 'side-' + ZONES[s.zone].side); }
+function showPanel(i){
+  const s = STOPS[i];
+  panel.className = 'panel ' + panelMode(s);
+  panel.innerHTML = renderStop(s, i);
+  panel.scrollTop = 0;
+  enhance(i);
+}
+function go(i, opt = {}){
+  i = Math.max(0, Math.min(STOPS.length - 1, i));
+  if (i === cur && !opt.force) return;
+  const prev = cur; cur = i; seen.add(i);
+  const s = STOPS[i];
+  stopSim();
+  clearTimeout(panelTimer); clearTimeout(autoTimer);
+  panel.classList.add('out');
+  for (const k in frameEls) frameEls[k].classList.remove('on', 'show', 'st1', 'st2', 'st3', 'dim', 'hover');
+  stage.classList.remove('is-ov');
+  document.documentElement.classList.toggle('at-ov', s.zone == null);
+  $('locNow').outerHTML = `<span class="now" id="locNow">${locHTML(s)}</span>`;
+  updateDock();
+  if (location.hash.slice(1) !== s.id && !opt.fromHash){ try { history.replaceState(null, '', '#' + s.id); } catch(e){} }
+  const B = camFor(s), RB = rectFor(s);
+  const dur = fly(B, RB, opt.dur, () => arrive(i)) || 0;
+  panelTimer = setTimeout(() => showPanel(i), reduce ? 0 : Math.max(260, dur * (prev < 0 ? 0.55 : 0.62)));
+}
+function arrive(i){
+  if (i !== cur) return;
+  const s = STOPS[i];
+  stage.style.setProperty('--k', (1 / camNow.s).toFixed(4));
+  if (s.zone) frameEls[s.zone].classList.add('on');
+  else {
+    stage.classList.add('is-ov');
+    if (s.kind === 'summary') for (const k in STAGE_OF) frameEls[k].classList.add('show', 'st' + STAGE_OF[k]);
+  }
+  if (auto) autoTimer = setTimeout(() => { if (cur < STOPS.length - 1) go(cur + 1); else setAuto(false); }, 9000);
+}
+function updateDock(){
+  document.querySelectorAll('.node').forEach(n => { const i = +n.dataset.go; n.classList.toggle('cur', i === cur); n.classList.toggle('seen', seen.has(i) && i !== cur); n.setAttribute('aria-current', i === cur ? 'step' : 'false'); });
+  document.querySelectorAll('.grp').forEach(g => g.classList.toggle('cur', +g.dataset.ch === STOPS[cur].chapter));
+  $('prev').disabled = cur === 0; $('next').disabled = cur === STOPS.length - 1;
+  const s = STOPS[cur];
+  $('mcount').innerHTML = `<b>${s.zone ? s.no : (cur === 0 ? '入口' : '總結')} <span style="color:var(--muted);font-weight:500">/ 10</span></b><span>${CHAPTERS[s.chapter].name}${s.zone ? '｜' + ZONES[s.zone].name : ''}</span><span class="mbar"><i style="width:${cur / (STOPS.length - 1) * 100}%"></i></span>`;
+}
+
+/* ---------- panel extras ---------- */
+function enhance(i){
+  const s = STOPS[i];
+  if (!reduce) panel.querySelectorAll('[data-count]').forEach(el => {
+    const n = +el.dataset.count, t0 = performance.now();
+    const step = now => { const t = Math.min(1, (now - t0) / 900); el.textContent = Math.round(n * ease(t)); if (t < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  if (s.id === 'factory') startSim();
+}
+let simIdx = 0, halted = false;
+function startSim(){
+  const sim = $('sim'); if (!sim) return;
+  halted = false; simIdx = 0;
+  const cells = sim.querySelectorAll('.grid9 li'), states = sim.querySelectorAll('.states li');
+  const stepSim = () => {
+    states.forEach((el, j) => el.classList.toggle('cur', j === simIdx % 5));
+    cells.forEach((el, j) => el.classList.toggle('live', j === simIdx % 9));
+    simIdx++;
+  };
+  stepSim();
+  if (!reduce) simTimer = setInterval(stepSim, 1000);
+}
+function stopSim(){ clearInterval(simTimer); simTimer = null; }
+function toggleEstop(){
+  const sim = $('sim'); if (!sim) return;
+  halted = !halted;
+  sim.classList.toggle('halt', halted);
+  $('estop').setAttribute('aria-pressed', String(halted));
+  $('estopL').textContent = halted ? '確認危險排除，復歸' : '按下緊急停止';
+  if (halted){ stopSim(); sim.querySelectorAll('.live,.cur').forEach(el => el.classList.remove('live', 'cur')); }
+  else { simIdx = 0; startSim(); }
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if (g){ go(+g.dataset.go); return; }
+  const qb = e.target.closest('[data-qr]');
+  if (qb){ const pop = qb.closest('.tool').querySelector('.qr-pop'); pop.hidden = false; qb.setAttribute('aria-expanded', 'true'); pop.querySelector('button').focus(); return; }
+  const qc = e.target.closest('[data-qr-close]');
+  if (qc){ const t = qc.closest('.tool'); t.querySelector('.qr-pop').hidden = true; const b = t.querySelector('[data-qr]'); b.setAttribute('aria-expanded', 'false'); b.focus(); return; }
+  if (e.target.closest('#estop')){ toggleEstop(); return; }
+  const h = e.target.closest('.hit');
+  if (h){ const i = zoneStop[h.dataset.zone]; if (i !== cur) go(i); }
+});
+$('prev').onclick = () => go(cur - 1);
+$('next').onclick = () => go(cur + 1);
+$('btnHome').onclick = () => go(0);
+$('brand').onclick = () => go(0);
+function setAuto(on){
+  auto = on; clearTimeout(autoTimer);
+  const b = $('btnAuto'); b.setAttribute('aria-pressed', String(on));
+  b.querySelector('.t').textContent = on ? '暫停導覽' : '自動導覽';
+  $('autoIco').innerHTML = on ? '<path d="M4.5 3h2.4v10H4.5zM9.1 3h2.4v10H9.1z" fill="currentColor"/>' : '<path d="M5 3.2v9.6L12.8 8z" fill="currentColor"/>';
+  if (on){ if (cur === STOPS.length - 1) go(0); else autoTimer = setTimeout(() => go(cur + 1), 2500); }
+}
+$('btnAuto').onclick = () => setAuto(!auto);
+$('btnFs').onclick = async () => {
+  try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch (e) { $('btnFs').disabled = true; $('btnFs').title = '此檢視環境不支援全螢幕'; }
+};
+$('mini').onclick = e => {
+  const r = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width * IW, y = (e.clientY - r.top) / r.height * IH;
+  for (const k in ZONES){ const [zx, zy, zw, zh] = ZONES[k].rect; if (x >= zx && x <= zx + zw && y >= zy && y <= zy + zh){ go(zoneStop[k]); return; } }
+  go(0);
+};
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (['input', 'textarea', 'select'].includes(tag)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && !['button', 'a'].includes(tag))){ e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(cur - 1); }
+  else if (e.key === 'Home'){ go(0); } else if (e.key === 'End'){ go(STOPS.length - 1); }
+  else if (e.key === 'Escape'){ document.querySelectorAll('.qr-pop').forEach(p => p.hidden = true); if (STOPS[cur].zone) go(0); }
+});
+// hover tooltips on zones and timeline nodes
+function showTip(html, x, y){ tip.innerHTML = html; tip.classList.add('on'); const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(innerWidth - w - 10, x + 16) + 'px'; tip.style.top = Math.max(10, Math.min(innerHeight - h - 10, y - h - 14)) + 'px'; }
+function hideTip(){ tip.classList.remove('on'); }
+let hoverZone = null;
+hitsEl.addEventListener('pointermove', e => {
+  const h = e.target.closest('.hit'); if (!h || e.pointerType === 'touch') return;
+  const k = h.dataset.zone, s = STOPS[zoneStop[k]];
+  if (hoverZone !== k){ if (hoverZone) frameEls[hoverZone].classList.remove('hover'); hoverZone = k; frameEls[k].classList.add('hover'); }
+  showTip(`<span class="s">${s.step} · ${ZONES[k].name}</span>${s.title}<span class="a">${zoneStop[k] === cur ? '目前位置' : '點擊前往這一區'}</span>`, e.clientX, e.clientY);
+});
+hitsEl.addEventListener('pointerleave', () => { if (hoverZone) frameEls[hoverZone].classList.remove('hover'); hoverZone = null; hideTip(); });
+hitsEl.addEventListener('pointerout', e => { if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest('.hit')){ if (hoverZone) frameEls[hoverZone].classList.remove('hover'); hoverZone = null; hideTip(); } });
+tl.addEventListener('pointerover', e => { const n = e.target.closest('.node'); if (!n) return; const r = n.getBoundingClientRect(); showTip(n.dataset.tip, r.left - 10, r.top); });
+tl.addEventListener('pointerout', e => { if (e.target.closest('.node')) hideTip(); });
+// summary stage hover → light up zones
+const stageHL = n => { for (const k in STAGE_OF) frameEls[k].classList.toggle('dim', n > 0 && STAGE_OF[k] !== n); };
+panel.addEventListener('pointerover', e => { const st = e.target.closest('.stage'); if (st) stageHL(+st.dataset.stage); });
+panel.addEventListener('pointerout', e => { const st = e.target.closest('.stage'); if (st && !st.contains(e.relatedTarget)) stageHL(0); });
+panel.addEventListener('focusin', e => { const st = e.target.closest('.stage'); if (st) stageHL(+st.dataset.stage); });
+panel.addEventListener('focusout', e => { if (e.target.closest('.stage')) stageHL(0); });
+// swipe on scene
+let tx0 = null, ty0 = null;
+$('viewport').addEventListener('touchstart', e => { const t = e.touches[0]; tx0 = t.clientX; ty0 = t.clientY; }, {passive:true});
+$('viewport').addEventListener('touchend', e => {
+  if (tx0 == null) return; const t = e.changedTouches[0], dx = t.clientX - tx0, dy = t.clientY - ty0; tx0 = null;
+  if (Math.abs(dx) > 50 && Math.abs(dy) < 70) go(cur + (dx < 0 ? 1 : -1));
+}, {passive:true});
+addEventListener('hashchange', () => { const i = STOPS.findIndex(s => s.id === location.hash.slice(1)); if (i >= 0 && i !== cur) go(i, {fromHash:true}); });
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => {
+  const was = isMobile; layout(); if (cur < 0) return; const s = STOPS[cur];
+  flight = null; camNow = camFor(s); rectNow = rectFor(s);
+  if (was !== isMobile || panel.classList.contains('band') !== (panelMode(s) === 'band')) showPanel(cur); else panel.className = 'panel ' + panelMode(s);
+}, 120); });
+
+/* ---------- ambient dust ---------- */
+const cv = $('dust'), cx = cv.getContext('2d'); let P = [];
+function sizeDust(){ const d = Math.min(2, devicePixelRatio || 1); cv.width = innerWidth * d; cv.height = innerHeight * d; cx.setTransform(d, 0, 0, d, 0, 0);
+  const n = Math.round(innerWidth * innerHeight / 34000); P = Array.from({length:n}, () => ({x:Math.random()*innerWidth, y:Math.random()*innerHeight, r:.5+Math.random()*1.5, a:.12+Math.random()*.35, v:.08+Math.random()*.25, p:Math.random()*6.28})); }
+function dust(now){ cx.clearRect(0, 0, innerWidth, innerHeight);
+  for (const q of P){ q.y -= q.v; q.x += Math.sin(now/2400 + q.p) * .15; if (q.y < -4){ q.y = innerHeight + 4; q.x = Math.random()*innerWidth; }
+    cx.globalAlpha = q.a * (0.6 + 0.4 * Math.sin(now/900 + q.p)); cx.fillStyle = q.r > 1.4 ? '#ffe2b0' : '#dfefff'; cx.beginPath(); cx.arc(q.x, q.y, q.r, 0, 6.283); cx.fill(); }
+  requestAnimationFrame(dust); }
+if (!reduce){ sizeDust(); addEventListener('resize', sizeDust); requestAnimationFrame(dust); }
+
+/* ---------- boot ---------- */
+function start(data){
+  layout();
+  const fromHash = STOPS.findIndex(s => s.id === location.hash.slice(1));
+  const target = data && Number.isInteger(data.i) ? data.i : (fromHash >= 0 ? fromHash : 0);
+  const doors = $('doors');
+  if (data && Number.isInteger(data.i)){ doors.classList.add('done'); }
+  else doors.addEventListener('animationend', e => { if (e.target.classList.contains('r')) doors.classList.add('done'); });
+  // establishing shot: eyes at the entrance, foreground lounge
+  const v0 = {x:0, y:0, w:M.VW, h:M.VH};
+  const s0 = Math.max(M.VW / IW, M.VH / IH) * (isMobile ? 1.15 : 1.55);
+  const [tx0, ty0] = clampT(s0, M.VW/2 - 780 * s0, M.VH/2 - 800 * s0, v0);
+  camNow = {s:s0, tx:tx0, ty:ty0, v:v0}; rectNow = FULL;
+  requestAnimationFrame(tick);
+  if (data && Number.isInteger(data.i)) go(target, {dur:0, force:true});
+  else setTimeout(() => go(target, {dur: reduce ? 0 : 2600, force:true}), reduce ? 0 : 1100);
+}
+window.claude?.hot?.snapshot?.(() => ({i: cur}));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+})();
+</script>
+</body>
+</html>
