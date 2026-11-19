@@ -294,6 +294,12 @@ ol,ul{margin:0;padding:0;list-style:none}
 .mbar{display:block;width:100%;height:3px;border-radius:3px;background:var(--line);margin-top:5px;overflow:hidden}
 .mbar i{display:block;height:100%;background:var(--amber);transition:width .6s ease}
 
+.topbar,.dock,.vignette{transition:opacity .5s ease}
+.clean .topbar,.clean .panel,.clean .dock,.clean .tip,.clean .vignette{opacity:0!important;pointer-events:none!important}
+.clean #stage .chip{opacity:0!important}
+.clean-hint{position:fixed;z-index:50;left:50%;bottom:28px;transform:translate(-50%,10px);padding:10px 18px;border-radius:999px;background:rgba(7,12,26,.82);border:1px solid rgba(243,184,103,.45);font-size:14px;color:var(--text);opacity:0;pointer-events:none;transition:opacity .5s ease,transform .5s ease;white-space:nowrap}
+.clean .clean-hint{animation:hintShow 3.6s ease both}
+@keyframes hintShow{0%{opacity:0;transform:translate(-50%,10px)}12%,75%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,0)}}
 .tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;padding:9px 12px;border-radius:12px;background:rgba(7,12,26,.94);border:1px solid rgba(243,184,103,.45);font-size:13px;line-height:1.45;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
 .tip.on{opacity:1;transform:none}
 .tip .s{display:block;font:600 11px var(--f-tech);letter-spacing:.14em;color:var(--holo)}
@@ -393,6 +399,7 @@ ol,ul{margin:0;padding:0;list-style:none}
   </nav>
 
   <div class="tip" id="tip" role="tooltip"></div>
+  <div class="clean-hint" id="cleanHint" aria-live="polite">點一下畫面，即可再次顯示操作面板</div>
 
   <div class="doors" id="doors" aria-hidden="true">
     <div class="door l"></div><div class="door r"></div>
@@ -554,7 +561,7 @@ function renderCover(){
     </div>
     <div style="--i:1">
       <div class="chapters">${chips}</div>
-      <div class="band-actions"><button class="btn-primary" type="button" data-go="1">開始導覽${ext}</button><span class="hint">${isMobile ? '左右滑動或點下方箭頭切換' : '鍵盤 ← → 切換，也可以直接點選場景裡的區域'}</span></div>
+      <div class="band-actions"><button class="btn-primary" type="button" data-go="1">開始導覽${ext}</button><button class="btn-ghost" type="button" data-clean><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>一覽全景</button><span class="hint">${isMobile ? '左右滑動或點下方箭頭切換' : '鍵盤 ← → 切換，也可以直接點選場景裡的區域'}</span></div>
     </div>
   </div>`;
 }
@@ -604,7 +611,7 @@ fetch('signs.svg').then(r => r.ok ? r.text() : Promise.reject(r.status)).then(t 
   [...doc.documentElement.childNodes].forEach(n => body.appendChild(document.importNode(n, true)));
 }).catch(() => {}); // the scene images already carry the same signs
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let isMobile = false, cur = -1, seen = new Set();
+let isMobile = false, cur = -1, seen = new Set(), cleanMode = false;
 
 sharp.decode ? sharp.decode().then(() => sharp.classList.add('ready')).catch(() => sharp.classList.add('ready')) : sharp.addEventListener('load', () => sharp.classList.add('ready'));
 if (sharp.complete) sharp.classList.add('ready');
@@ -655,6 +662,7 @@ function layout(){
 }
 function viewFor(s){
   const {VW, VH, top, bottom, pw, sheetH} = M;
+  if (cleanMode) return {x:0, y:0, w:VW, h:VH};
   if (isMobile) return {x:0, y:top, w:VW, h:VH - bottom - sheetH - top - 6};
   if (s.zone == null) return {x:0, y:0, w:VW, h:VH};
   const g = 22 + 26;
@@ -827,6 +835,18 @@ function toggleEstop(){
   else { simIdx = 0; startSim(); }
 }
 
+/* ---------- clean view: hide every control to show the whole studio ---------- */
+function setClean(on){
+  if (on === cleanMode || STOPS[cur].zone != null && on) return;
+  cleanMode = on;
+  if (on){ setAuto(false); hideTip(); }
+  document.documentElement.classList.toggle('clean', on);
+  fly(camFor(STOPS[cur]), rectFor(STOPS[cur]), 900, () => {});
+  if (!on){ const b = panel.querySelector('[data-clean]'); if (b) b.focus({preventScroll:true}); }
+}
+document.addEventListener('click', e => { if (cleanMode){ e.preventDefault(); e.stopPropagation(); setClean(false); } }, true);
+document.addEventListener('keydown', e => { if (cleanMode){ e.preventDefault(); e.stopImmediatePropagation(); setClean(false); } }, true);
+
 /* ---------- events ---------- */
 document.addEventListener('click', e => {
   const g = e.target.closest('[data-go]');
@@ -836,6 +856,7 @@ document.addEventListener('click', e => {
   const qc = e.target.closest('[data-qr-close]');
   if (qc){ const t = qc.closest('.tool'); t.querySelector('.qr-pop').hidden = true; const b = t.querySelector('[data-qr]'); b.setAttribute('aria-expanded', 'false'); b.focus(); return; }
   if (e.target.closest('#estop')){ toggleEstop(); return; }
+  if (e.target.closest('[data-clean]')){ setClean(true); return; }
   const h = e.target.closest('.hit');
   if (h){ const i = zoneStop[h.dataset.zone]; if (i !== cur) go(i); }
 });
@@ -893,7 +914,7 @@ panel.addEventListener('focusout', e => { if (e.target.closest('.stage')) stageH
 let tx0 = null, ty0 = null;
 $('viewport').addEventListener('touchstart', e => { const t = e.touches[0]; tx0 = t.clientX; ty0 = t.clientY; }, {passive:true});
 $('viewport').addEventListener('touchend', e => {
-  if (tx0 == null) return; const t = e.changedTouches[0], dx = t.clientX - tx0, dy = t.clientY - ty0; tx0 = null;
+  if (tx0 == null || cleanMode) { tx0 = null; return; } const t = e.changedTouches[0], dx = t.clientX - tx0, dy = t.clientY - ty0; tx0 = null;
   if (Math.abs(dx) > 50 && Math.abs(dy) < 70) go(cur + (dx < 0 ? 1 : -1));
 }, {passive:true});
 addEventListener('hashchange', () => { const i = STOPS.findIndex(s => s.id === location.hash.slice(1)); if (i >= 0 && i !== cur) go(i, {fromHash:true}); });
