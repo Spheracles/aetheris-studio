@@ -193,8 +193,8 @@ ol,ul{margin:0;padding:0;list-style:none}
 .cta-d{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
 
 /* tabs */
-.tabs{display:flex;gap:6px;padding:4px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
-.tab-b{flex:1;min-height:36px;border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:13.5px;font-weight:500;cursor:pointer;transition:background .25s,color .25s}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.tab-b{flex:1 1 calc(50% - 4px);min-height:34px;font-size:13px!important;border:0;border-radius:999px;background:transparent;color:var(--muted);font-size:13.5px;font-weight:500;cursor:pointer;transition:background .25s,color .25s}
 .tab-b:hover{color:var(--text)}
 .tab-b[aria-selected="true"]{background:linear-gradient(180deg,#ffd394,var(--amber));color:#2a1a06;font-weight:700}
 .tab-p{display:grid;gap:14px;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
@@ -225,6 +225,8 @@ ol,ul{margin:0;padding:0;list-style:none}
 .lightbox figcaption{font-size:14px;color:var(--text)}
 .is-mobile .vid{grid-template-columns:1fr}
 .is-mobile .vid video{max-width:240px}
+.xref{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:12px;border:1px dashed rgba(243,184,103,.45);font-size:13.5px}
+.xref span{flex:1 1 200px}
 /* factory sim */
 .grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .grid9 li{display:flex;align-items:baseline;gap:8px;border-radius:10px;padding:7px 10px;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:background .35s,border-color .35s,box-shadow .35s}
@@ -554,13 +556,14 @@ const STOPS = [
     ${blk('<span class="cn">任務流程</span>', flow([['','選工件'],['','點檢'],['','設定參數'],['','製程'],['','量測'],['','紀錄']], 'pills') + `<ul class="tags" style="margin-top:10px"><li>生存戰與鳳凰計畫</li></ul>`)}
     ${cta('sumeeko','成果 02 / 智慧工廠','開啟智慧工廠 App','spheracles.github.io')}` },
   { id:'garden', zone:9, chapter:3, step:'STEP 07', code:'DALSON / PRODUCT DESIGN', no:'07',
-    title:'劉虔瑋老師｜財富花園・釀字煙波・短影音',
-    lead:'三項成果：用 AI 反向訪談建立規格的資源管理展示、為台酒設計的創意產品，以及從腳本到分鏡的短影音企劃。',
+    title:'劉虔瑋老師｜四項專案成果',
+    lead:'資源管理展示《財富花園》、從腳本到分鏡的短影音企劃、為台酒設計的創意產品，以及品質觀點的 AI 模擬應用案例。',
     why:'生活支援區照顧日常的金錢、時間與心力；吧台陳列釀字・煙波，也是大家圍著看短影音試片的休息角落。',
-    body:() => `<div class="tabs" role="tablist" aria-label="劉虔瑋老師的三項成果">
+    body:() => `<div class="tabs" role="tablist" aria-label="劉虔瑋老師的四項成果">
       <button type="button" role="tab" class="tab-b" aria-selected="true" data-tab="tg">成果 03｜財富花園</button>
+      <button type="button" role="tab" class="tab-b" aria-selected="false" data-tab="tv">成果 04｜短影音</button>
       <button type="button" role="tab" class="tab-b" aria-selected="false" data-tab="tb">成果 05｜釀字・煙波</button>
-      <button type="button" role="tab" class="tab-b" aria-selected="false" data-tab="tv">成果 06｜短影音</button>
+      <button type="button" role="tab" class="tab-b" aria-selected="false" data-tab="tk">成果 06｜應用案例</button>
     </div>
     <div class="tab-p" data-pane="tg" role="tabpanel">
     <p class="p-lead" style="margin-top:0">透過 AI 反向訪談先建立規格，再將資源管理概念發展為線上展示。</p>
@@ -568,15 +571,6 @@ const STOPS = [
     <div class="res"><b>金錢</b><i>×</i><b>時間</b><i>×</i><b>心力</b></div>
     <p class="principle">AI 提出資源培育建議，由使用者確認後再執行；權限、例外與驗收需先定義。</p>
     ${cta('garden','成果 03 / 財富花園','開啟 Wealth Garden','spheracles.github.io')}
-    </div>
-    <div class="tab-p" data-pane="tb" role="tabpanel" hidden>
-    <div class="brew"><span class="brew-k">MIST &amp; INK COLLECTION</span><b class="brew-n">釀字・煙波 <em>BREWINK</em></b><p class="brew-t">以酒釀時光，以墨寫故事。</p></div>
-    <p class="p-lead" style="margin-top:0">為臺灣菸酒公司（台酒）設計的新產品企劃：把酒釀與墨色結合成一款書寫用品，並做出完整的品牌官網概念原型。</p>
-    ${blk('<span class="cn">產品線</span>', `<ul class="feat">${['典藏書寫禮盒','補充墨水','十二生肖歲釀','歲時釀色'].map(t => `<li>${t}</li>`).join('')}</ul>`)}
-    ${blk('<span class="cn">官網原型涵蓋</span>', `<ul class="tags hot">${['線上商店','品牌故事','三款墨色','使用與保養','會員專區','送禮與刻字','企業採購'].map(t => `<li>${t}</li>`).join('')}</ul>`)}
-    <p class="principle">墨水為不含酒精的水性配方，造型取自傳統器物輪廓，純粹作為書寫用品。</p>
-    ${note('官網為課程中的新產品企劃概念原型，並非臺灣菸酒股份有限公司官方網站；商品尚未上市，購物車與結帳不會收費。')}
-    ${cta('brewink','成果 05 / 台酒創意產品','開啟釀字・煙波官網','spheracles.github.io')}
     </div>
     <div class="tab-p" data-pane="tv" role="tabpanel" hidden>
     <p class="p-lead" style="margin-top:0">學習短影音的完整製作流程：從腳本編寫、角色與場景設定到分鏡規劃，整理成一份企劃書，再產出測試用影片。</p>
@@ -587,6 +581,20 @@ const STOPS = [
       ['ANA 機器人','頭頂天線、胸前數據螢幕，背後有綠色幼苗發條',[['ana-turn','三視圖'],['ana-sheet','表情集・動作集']]]
     ].map(c => `<article class="char"><button type="button" class="char-cover" data-zoom="media/${c[2][0][0]}.webp" data-cap="${c[0]}｜${c[2][0][1]}"><img src="media/${c[2][0][0]}-sm.webp" alt="${c[0]} ${c[2][0][1]}" loading="lazy"></button><b>${c[0]}</b><p>${c[1]}</p><div class="char-more">${c[2].map(v => `<button type="button" data-zoom="media/${v[0]}.webp" data-cap="${c[0]}｜${v[1]}">${v[1]}</button>`).join('')}</div></article>`).join('')}</div><p class="hint" style="margin-top:8px">每組角色都有六種表情（平靜、微笑、困惑、驚喜、開心、放鬆）與四種動作，點圖可放大。</p>`)}
     ${blk('<span class="cn">測試影片</span>', `<div class="vid"><video src="media/short-test.mp4" poster="media/short-test-poster.webp" controls playsinline preload="metadata"></video><div class="vid-t"><b>直式 9:16・20 秒</b><p>臥室地板升起一座玻璃電梯，Markus 走進電梯後一路下降，抵達地下實驗室。</p><p class="hint">用來檢驗角色在不同場景間是否保持一致，以及鏡頭轉場的節奏。</p></div></div>`)}
+    </div>
+    <div class="tab-p" data-pane="tb" role="tabpanel" hidden>
+    <div class="brew"><span class="brew-k">MIST &amp; INK COLLECTION</span><b class="brew-n">釀字・煙波 <em>BREWINK</em></b><p class="brew-t">以酒釀時光，以墨寫故事。</p></div>
+    <p class="p-lead" style="margin-top:0">為臺灣菸酒公司（台酒）設計的新產品企劃：把酒釀與墨色結合成一款書寫用品，並做出完整的品牌官網概念原型。</p>
+    ${blk('<span class="cn">產品線</span>', `<ul class="feat">${['典藏書寫禮盒','補充墨水','十二生肖歲釀','歲時釀色'].map(t => `<li>${t}</li>`).join('')}</ul>`)}
+    ${blk('<span class="cn">官網原型涵蓋</span>', `<ul class="tags hot">${['線上商店','品牌故事','三款墨色','使用與保養','會員專區','送禮與刻字','企業採購'].map(t => `<li>${t}</li>`).join('')}</ul>`)}
+    <p class="principle">墨水為不含酒精的水性配方，造型取自傳統器物輪廓，純粹作為書寫用品。</p>
+    ${note('官網為課程中的新產品企劃概念原型，並非臺灣菸酒股份有限公司官方網站；商品尚未上市，購物車與結帳不會收費。')}
+    ${cta('brewink','成果 05 / 台酒創意產品','開啟釀字・煙波官網','spheracles.github.io')}
+    </div>
+    <div class="tab-p" data-pane="tk" role="tabpanel" hidden>
+    <p class="p-lead" style="margin-top:0">用人物認知蒸餾的方法，模擬品質管理大師的判斷架構，替世德工業做一次品質觀點的重新檢視。</p>
+    ${blk('<span class="cn">應用案例</span>', `<p class="case">以狩野紀昭（Noriaki Kano）的品質觀點，重新思考世德工業。</p><ol class="ladder"><li>品質管制（QC）</li><li>品質管理（QM）</li><li>品質創造（Quality Creation）</li></ol>`)}
+    ${note('※ 這是基於公開資料的角色觀點模擬，並非本人授權、背書或意識復原。')}
     </div>` },
   { id:'press', zone:3, chapter:3, step:'STEP 08', code:'HYDRA / OPERATIONS', no:'08',
     title:'夏承樟老師｜《訂單管理蒸汽印刷機》',
@@ -599,9 +607,9 @@ const STOPS = [
   { id:'ritual', zone:8, chapter:3, step:'STEP 09', code:'COGNITIVE SIMULATION', no:'09',
     title:'吳俊傑老師｜「AI 降乩儀式」',
     lead:'人物認知蒸餾與心智模型模擬：從模仿語氣，走向模擬判斷架構。',
-    why:'展示交流區請模擬的專家視角上台，與團隊交換對世德工業的品質看法。',
+    why:'展示交流區請模擬的專家視角上台，和團隊交換觀點。',
     body:() => `${flow([['1','公開資料'],['2','認知蒸餾'],['3','心智建模'],['4','情境模擬'],['5','觀點驗證']], 'pills')}
-    ${blk('<span class="cn">應用案例</span>', `<p class="case">以狩野紀昭（Noriaki Kano）的品質觀點，重新思考世德工業。</p><ol class="ladder"><li>品質管制（QC）</li><li>品質管理（QM）</li><li>品質創造（Quality Creation）</li></ol>`)}
+    <div class="xref"><span>應用案例：以狩野紀昭的品質觀點重新思考世德工業，收錄在劉虔瑋老師那一站的「成果 06」。</span><button type="button" class="btn-ghost" data-go="7" data-tabto="tk">前往成果 06</button></div>
     ${note('※ 這是基於公開資料的角色觀點模擬，並非本人授權、背書或意識復原。')}` },
   { id:'summary', zone:null, chapter:4, kind:'summary' }
 ];
@@ -631,7 +639,7 @@ function renderSummary(){
   const st = [
     ['01','認識 AI','Suno · Prezi<br>ChatPDF · NotebookLM',[1]],
     ['02','協作 AI','Prompt · Gemini 研究<br>ChatGPT × Claude',[4,2]],
-    ['03','實踐 AI','世德互動網站 · 職涯 App<br>財富花園 · 釀字煙波 · 訂單管理',[6,7,5,9,3]]
+    ['03','實踐 AI','世德互動網站 · 職涯 App<br>財富花園 · 短影音 · 釀字煙波 · 訂單管理',[6,7,5,9,3]]
   ];
   return `<div class="sheet-grip"></div><div class="band-grid">
     <div style="--i:0">
@@ -673,7 +681,7 @@ fetch('signs.svg').then(r => r.ok ? r.text() : Promise.reject(r.status)).then(t 
   [...doc.documentElement.childNodes].forEach(n => body.appendChild(document.importNode(n, true)));
 }).catch(() => {}); // the scene images already carry the same signs
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let isMobile = false, cur = -1, seen = new Set(), cleanMode = false;
+let isMobile = false, cur = -1, seen = new Set(), cleanMode = false, pendingTab = null;
 
 sharp.decode ? sharp.decode().then(() => sharp.classList.add('ready')).catch(() => sharp.classList.add('ready')) : sharp.addEventListener('load', () => sharp.classList.add('ready'));
 if (sharp.complete) sharp.classList.add('ready');
@@ -825,6 +833,7 @@ function showPanel(i){
   panel.innerHTML = renderStop(s, i);
   panel.scrollTop = 0;
   enhance(i);
+  if (pendingTab){ const b = panel.querySelector(`[data-tab="${pendingTab}"]`); pendingTab = null; if (b) b.click(); }
 }
 function go(i, opt = {}){
   i = Math.max(0, Math.min(STOPS.length - 1, i));
@@ -913,7 +922,7 @@ document.addEventListener('keydown', e => { if (cleanMode){ e.preventDefault(); 
 /* ---------- events ---------- */
 document.addEventListener('click', e => {
   const g = e.target.closest('[data-go]');
-  if (g){ go(+g.dataset.go); return; }
+  if (g){ pendingTab = g.dataset.tabto || null; go(+g.dataset.go); return; }
   const qb = e.target.closest('[data-qr]');
   if (qb){ const pop = qb.closest('.tool').querySelector('.qr-pop'); pop.hidden = false; qb.setAttribute('aria-expanded', 'true'); pop.querySelector('button').focus(); return; }
   const qc = e.target.closest('[data-qr-close]');
