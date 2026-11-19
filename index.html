@@ -245,6 +245,14 @@ ol,ul{margin:0;padding:0;list-style:none}
 .game-cta > div{flex:1 1 220px;display:grid;gap:6px}
 .game-cta b{font:900 20px/1.3 var(--f-display)}
 .game-cta p{font-size:13px;color:#cfd6ea}
+.steps3{display:grid;gap:10px}
+.steps3 li{display:flex;gap:12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.035)}
+.steps3 li > span{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--amber);color:#24180a;font:700 13px var(--f-tech)}
+.steps3 b{font-size:14.5px}
+.steps3 p{font-size:13px;color:#cfd6ea;margin:3px 0 8px}
+.steps3 .btn-sm{font-size:12px}
+.char-cover.notes{display:block;width:100%;aspect-ratio:auto;margin-top:10px;background:#0b1530}
+.char-cover.notes img{height:auto}
 /* factory sim */
 .grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .grid9 li{display:flex;align-items:baseline;gap:8px;border-radius:10px;padding:7px 10px;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:background .35s,border-color .35s,box-shadow .35s}
@@ -497,8 +505,8 @@ const CHAPTERS = [
   {name:'入口', from:0, to:0},
   {name:'工具入門', from:1, to:3},
   {name:'智慧研究', from:4, to:6},
-  {name:'專案實作', from:7, to:9},
-  {name:'學習總結', from:10, to:10}
+  {name:'專案實作', from:7, to:10},
+  {name:'學習總結', from:11, to:11}
 ];
 
 /* ---------- content helpers ---------- */
@@ -635,15 +643,37 @@ const STOPS = [
       ['拿','拿破崙','極速戰略家與制度重構者','時間、主動權、集中；進取但有界。',['中間位置・分向擊破','軍團分進合擊','士氣槓桿','制度化','攻勢節奏'],'主力壓在一側鐵路線，炸彈隨行；搶節奏、重主動權，兵力變薄時縮短戰線。','b']
     ].map(m => `<article class="mm-c ${m[6]}"><header><span class="mm-s">${m[0]}</span><div><b>${m[1]}</b><small>${m[2]}</small></div></header><p class="mm-m">${m[3]}</p><ol class="mm-l">${m[4].map((x,i) => `<li><span>M${i+1}</span>${x}</li>`).join('')}</ol><p class="mm-p"><span>棋風</span>${m[5]}</p></article>`).join('')}</div>
     ${note('※ 兩個模型都是依史料與原典的認知模擬，並非孫武或拿破崙本人；拿破崙的判斷語句屬角色模擬，不是歷史原話。')}` },
+  { id:'jim', zone:4, chapter:3, step:'STEP 10', code:'RESEARCH → SHORT VIDEO', no:'10',
+    title:'徐嘉敬講師（阿美 Jim）｜AI 研究流程與短影音',
+    lead:'先用 YouTube × NotebookLM × Gemini 建立可查證的研究資料，再依課堂的短影音規格，為世德工業完成一支直式短影音。',
+    why:'再回到文案與編輯企劃區：先查資料、再寫腳本、後製作，正是這一區的工作順序。',
+    body:() => `<div class="tabs" role="tablist" aria-label="徐嘉敬講師的兩項成果">
+      <button type="button" role="tab" class="tab-b" aria-selected="true" data-tab="j1">成果 09｜YouTube × NotebookLM</button>
+      <button type="button" role="tab" class="tab-b" aria-selected="false" data-tab="j2">成果 10｜世德工業短影音</button>
+    </div>
+    <div class="tab-p" data-pane="j1" role="tabpanel">
+    <p class="p-lead" style="margin-top:0">把整個 YouTube 頻道的影片一次匯入 NotebookLM 當成研究來源，再到 Gemini 直接引用這本筆記本。</p>
+    <ol class="steps3">
+      <li><span>01</span><div><b>安裝擴充功能</b><p>在 Google Chrome 安裝「YouTube to NotebookLM」。</p></div></li>
+      <li><span>02</span><div><b>從 YouTube 匯入</b><p>打開想匯入的主頻道或搜尋結果頁，點頁面上的「Notebook」按鈕，影片就會整批送進 NotebookLM。</p><a class="btn-sm" href="https://www.youtube.com/results?search_query=simon+sinek" target="_blank" rel="noopener">範例：Simon Sinek 搜尋結果${ext}</a></div></li>
+      <li><span>03</span><div><b>在 Gemini 引用</b><p>在 Gemini 對話框按「＋」，從「更多上傳選項」選擇「Notebooks」，就能把整本筆記本當成對話資料。</p><a class="btn-sm" href="https://notebook.google.com/notebook/ef0c6a1e-c2b2-48bf-a79a-bda16391228b" target="_blank" rel="noopener">範例 NotebookLM 筆記本${ext}</a></div></li>
+    </ol>
+    </div>
+    <div class="tab-p" data-pane="j2" role="tabpanel" hidden>
+    <p class="p-lead" style="margin-top:0">依照課堂的短影音作業規格，為世德工業製作一支直式 Vlog，介紹產品用途與服務特色。</p>
+    ${blk('<span class="cn">成品｜世德工業 Vlog</span>', `<div class="vid"><video src="media/sumeeko-vlog.mp4" poster="media/sumeeko-vlog-poster.webp" controls playsinline preload="metadata"></video><div class="vid-t"><b>直式 9:16・約 80 秒</b><p>由 AI 機器人主持，從「一顆看似平凡的螺絲」切入，依序介紹產品用途（應用在汽車關鍵結構的特殊扣件）與服務特色（從設計、製造到品質與供應）。</p></div></div>`)}
+    ${blk('<span class="cn">課堂重點</span>', `<ul class="feat">${['為一間真實企業做 1 支短影音','單一主題・單一受眾・單一訊息','先研究、再腳本、後製作','每句產品宣稱都要能回到來源','直式 9:16・字幕逐字檢查','交付：影片＋理念卡＋來源清單＋AI 說明'].map(t => `<li>${t}</li>`).join('')}</ul><button type="button" class="char-cover notes" data-zoom="media/jim-shortvideo-notes.webp" data-cap="短影音作業重點總整理（阿美元宇宙）"><img src="media/jim-shortvideo-notes-sm.webp" alt="短影音作業重點總整理" loading="lazy"></button><p class="hint" style="margin-top:6px">點圖可放大完整的 13 張課堂重點整理。</p>`)}
+    ${note('課堂作品，非世德工業正式委託或發布的廣告。')}
+    </div>` },
   { id:'summary', zone:null, chapter:4, kind:'summary' }
 ];
 
-const zoneStop = {}; STOPS.forEach((s, i) => { if (s.zone) zoneStop[s.zone] = i; });
+const zoneStop = {}; STOPS.forEach((s, i) => { if (s.zone && zoneStop[s.zone] == null) zoneStop[s.zone] = i; });
 
 function renderCover(){
   const chips = CHAPTERS.slice(1).map((c, ci) => {
-    const zs = c.from === c.to && c.from === 10 ? '<span class="wide">回到全景</span>' : STOPS.slice(c.from, c.to + 1).map(s => zn(s.zone)).join('');
-    const range = c.from === 10 ? 'FINAL' : `STEP 0${c.from}–0${c.to}`;
+    const zs = c.from === c.to && c.from === 11 ? '<span class="wide">回到全景</span>' : STOPS.slice(c.from, c.to + 1).map(s => zn(s.zone)).join('');
+    const pad = n => String(n).padStart(2, '0'); const range = c.from === 11 ? 'FINAL' : `STEP ${pad(c.from)}–${pad(c.to)}`;
     return `<button class="chap" type="button" data-go="${c.from}"><span class="k">${range}</span><b>${c.name}</b><span class="zs">${zs}</span></button>`;
   }).join('');
   return `<div class="sheet-grip"></div><div class="band-grid">
@@ -661,14 +691,14 @@ function renderCover(){
 }
 function renderSummary(){
   const st = [
-    ['01','認識 AI','Suno · Prezi<br>ChatPDF · NotebookLM',[1]],
+    ['01','認識 AI','Suno · Prezi · ChatPDF<br>NotebookLM · YouTube 匯入',[1]],
     ['02','協作 AI','Prompt · Gemini 研究<br>ChatGPT × Claude',[4,2]],
-    ['03','實踐 AI','世德互動網站 · 職涯 App · 財富花園<br>短影音 · 釀字煙波 · 訂單管理 · 心智模型對弈',[6,7,5,9,3,8]]
+    ['03','實踐 AI','世德互動網站 · 職涯 App · 財富花園<br>短影音 · 釀字煙波 · 訂單管理<br>心智模型對弈 · 世德短影音',[6,7,5,9,3,8]]
   ];
   return `<div class="sheet-grip"></div><div class="band-grid">
     <div style="--i:0">
       <div class="p-eyebrow" style="margin-top:0">FINAL · LEARNING REFLECTION</div>
-      <div class="p-head"><span class="p-no">10</span><h2>兩個月的學習總結</h2></div>
+      <div class="p-head"><span class="p-no">11</span><h2>兩個月的學習總結</h2></div>
       <p class="p-lead">從工具使用者，走向跨模型協作、系統規劃與應用實踐。</p>
       <p class="p-why" style="margin-top:14px">回到全景：三個學習階段散布在工作坊的各個角落，移到卡片上就會亮起對應區域。</p>
     </div>
@@ -725,7 +755,7 @@ for (const k in ZONES){
   hitsEl.appendChild(b);
   const c = document.createElement('div');
   c.className = 'chip'; c.style.left = z.chip[0] + 'px'; c.style.top = z.chip[1] + 'px';
-  c.innerHTML = `<span class="cs">STEP </span>${s.no}`; hitsEl.appendChild(c);
+  c.innerHTML = `<span class="cs">STEP </span>${STOPS.filter(q => q.zone == k).map(q => q.no).join('・')}`; hitsEl.appendChild(c);
 }
 
 // timeline
@@ -894,7 +924,7 @@ function updateDock(){
   document.querySelectorAll('.grp').forEach(g => g.classList.toggle('cur', +g.dataset.ch === STOPS[cur].chapter));
   $('prev').disabled = cur === 0; $('next').disabled = cur === STOPS.length - 1;
   const s = STOPS[cur];
-  $('mcount').innerHTML = `<b>${s.zone ? s.no : (cur === 0 ? '入口' : '總結')} <span style="color:var(--muted);font-weight:500">/ 10</span></b><span>${CHAPTERS[s.chapter].name}${s.zone ? '｜' + ZONES[s.zone].name : ''}</span><span class="mbar"><i style="width:${cur / (STOPS.length - 1) * 100}%"></i></span>`;
+  $('mcount').innerHTML = `<b>${s.zone ? s.no : (cur === 0 ? '入口' : '總結')} <span style="color:var(--muted);font-weight:500">/ ${STOPS.length - 2}</span></b><span>${CHAPTERS[s.chapter].name}${s.zone ? '｜' + ZONES[s.zone].name : ''}</span><span class="mbar"><i style="width:${cur / (STOPS.length - 1) * 100}%"></i></span>`;
 }
 
 /* ---------- panel extras ---------- */

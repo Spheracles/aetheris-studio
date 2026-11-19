@@ -18,7 +18,8 @@
 | 專案實作 | 07 劉虔瑋老師｜四項專案成果（財富花園、短影音、釀字煙波、應用案例） | ⑨ 生活與設施支援區 |
 | | 08 夏承樟老師｜《訂單管理蒸汽印刷機》 | ③ 視覺創作與插畫繪製區 |
 | | 09 吳俊傑老師｜心智模型對弈：孫武 × 拿破崙（陸軍棋） | ⑧ 展示交流與發表區 |
-| 學習總結 | 10 兩個月的學習總結 | 全景回望 |
+| | 10 徐嘉敬講師（阿美 Jim）｜AI 研究流程與短影音 | ④ 文案寫作與編輯企劃區 |
+| 學習總結 | 11 兩個月的學習總結 | 全景回望 |
 
 ## 操作
 
@@ -27,7 +28,7 @@
 - 右上角：全景、自動導覽、全螢幕
 - 網址加上站點名稱可直接開啟該站，例如 `#garden`、`#factory`、`#summary`
 
-站點名稱：`entrance` `toolbox` `prompt` `research` `web` `factory` `sumeeko` `garden` `press` `ritual` `summary`
+站點名稱：`entrance` `toolbox` `prompt` `research` `web` `factory` `sumeeko` `garden` `press` `ritual` `jim` `summary`
 
 ## 檔案
 
