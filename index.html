@@ -230,6 +230,8 @@ ol,ul{margin:0;padding:0;list-style:none}
 .mm{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
 .mm-c{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.035)}
 .mm-c header{display:flex;gap:10px;align-items:center}
+.mm-face{width:52px;height:52px;border-radius:12px;object-fit:cover;flex:none}
+.mm-c.r .mm-face{box-shadow:0 0 0 2px rgba(255,150,120,.45)}.mm-c.b .mm-face{box-shadow:0 0 0 2px rgba(246,217,131,.45)}
 .mm-s{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;font:900 21px/1 var(--f-display);flex:none}
 .mm-c.r .mm-s{background:linear-gradient(160deg,#d24a3c,#8e1f17);color:#ffe9d2}
 .mm-c.b .mm-s{background:linear-gradient(160deg,#2f56b0,#152c66);color:#f6d983}
@@ -678,7 +680,7 @@ const STOPS = [
     <div class="mm">${[
       ['孫','孫武','兵聖戰略心智模型','先算後動，先全後破；守其不可勝，攻其可勝。',['五事七計','全勝思維','先勝後戰','避實擊虛・奇正','水無常形'],'三雷護旗、主力居中靠後；先用工兵和排長試探，勝算高才出手，重視行營與保存兵力。','r'],
       ['拿','拿破崙','極速戰略家與制度重構者','時間、主動權、集中；進取但有界。',['中間位置・分向擊破','軍團分進合擊','士氣槓桿','制度化','攻勢節奏'],'主力壓在一側鐵路線，炸彈隨行；搶節奏、重主動權，兵力變薄時縮短戰線。','b']
-    ].map(m => `<article class="mm-c ${m[6]}"><header><span class="mm-s">${m[0]}</span><div><b>${m[1]}</b><small>${m[2]}</small></div></header><p class="mm-m">${m[3]}</p><ol class="mm-l">${m[4].map((x,i) => `<li><span>M${i+1}</span>${x}</li>`).join('')}</ol><p class="mm-p"><span>棋風</span>${m[5]}</p></article>`).join('')}</div>
+    ].map(m => `<article class="mm-c ${m[6]}"><header><img class="mm-face" src="media/${m[6] === 'r' ? 'sunwu' : 'napoleon'}.webp" alt="${m[1]}肖像（AI 生成插畫）" loading="lazy"><div><b>${m[1]}</b><small>${m[2]}</small></div></header><p class="mm-m">${m[3]}</p><ol class="mm-l">${m[4].map((x,i) => `<li><span>M${i+1}</span>${x}</li>`).join('')}</ol><p class="mm-p"><span>棋風</span>${m[5]}</p></article>`).join('')}</div>
     ${note('※ 兩個模型都是依史料與原典的認知模擬，並非孫武或拿破崙本人；拿破崙的判斷語句屬角色模擬，不是歷史原話。')}` },
   { id:'jim', zone:4, chapter:3, step:'STEP 10', code:'RESEARCH → SHORT VIDEO', no:'10',
     title:'徐嘉敬講師（阿美 Jim）｜AI 研究流程與短影音',

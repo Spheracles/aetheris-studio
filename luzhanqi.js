@@ -344,7 +344,7 @@ function think(st, side) {
 
 /* ------------------------------------------------------------------ the two personas */
 const SUN = {
-  key: 'sun', name: '孫武', seal: '孫', color: 'red',
+  key: 'sun', name: '孫武', seal: '孫', color: 'red', img: 'media/sunwu.webp',
   // 先為不可勝：三雷護旗、主力居中靠後、工兵在前試探
   deploy(rand) {
     const fx = rand() < 0.5 ? 1 : 3, ox = 4 - fx;
@@ -363,7 +363,7 @@ const SUN = {
   motto: '先算後動，先全後破；守其不可勝，攻其可勝。',
 };
 const NAP = {
-  key: 'nap', name: '拿破崙', seal: '拿', color: 'blue',
+  key: 'nap', name: '拿破崙', seal: '拿', color: 'blue', img: 'media/napoleon.webp',
   init() { this.flank = this._flank; },
   // 中間位置與集中：主力壓在一側鐵路，炸彈隨行，工兵分散開路
   deploy(rand) {
@@ -466,7 +466,15 @@ const CSS = `
 .lzq-main{display:grid;grid-template-columns:minmax(230px,300px) minmax(0,1fr) minmax(230px,300px);gap:16px;padding:14px 20px;min-height:0}
 .lzq-side{display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto;padding:14px;border-radius:18px;background:rgba(10,17,36,.78);border:1px solid var(--line,rgba(188,208,255,.15))}
 .lzq-side header{display:flex;gap:12px;align-items:center}
-.lzq-seal{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;font:900 24px/1 var(--f-display,serif);flex:none}
+.lzq-side header{align-items:flex-end}
+.lzq-face{position:relative;flex:none;width:96px;height:96px;border-radius:18px;overflow:hidden;transition:box-shadow .35s,transform .35s}
+.lzq-face img{width:100%;height:100%;object-fit:cover;display:block}
+.s0 .lzq-face{box-shadow:0 0 0 2px rgba(255,150,120,.45)}
+.s1 .lzq-face{box-shadow:0 0 0 2px rgba(246,217,131,.45)}
+.lzq-side.turn .lzq-face{transform:scale(1.04)}
+.s0.turn .lzq-face{box-shadow:0 0 0 3px #ff8f73,0 0 26px rgba(255,120,90,.6)}
+.s1.turn .lzq-face{box-shadow:0 0 0 3px #f6d983,0 0 26px rgba(246,217,131,.55)}
+.lzq-seal{position:absolute;right:4px;bottom:4px;display:grid;place-items:center;width:26px;height:26px;border-radius:7px;font:900 14px/1 var(--f-display,serif)}
 .s0 .lzq-seal{background:linear-gradient(160deg,#d24a3c,#8e1f17);color:#ffe9d2;box-shadow:0 0 0 2px rgba(255,190,160,.3)}
 .s1 .lzq-seal{background:linear-gradient(160deg,#2f56b0,#152c66);color:#f6d983;box-shadow:0 0 0 2px rgba(246,217,131,.3)}
 .lzq-side header b{display:block;font:900 19px/1.2 var(--f-display,serif)}
@@ -521,6 +529,7 @@ const CSS = `
   .lzq-board{max-height:none;width:min(100%,460px);height:auto}
   .lzq-motto,.lzq-tl{display:none}
 }
+@media (max-width:980px){ .lzq-face{width:64px;height:64px;border-radius:14px} .lzq-seal{width:20px;height:20px;font-size:11px} }
 @media (max-width:560px){ .lzq-main{grid-template-columns:1fr;grid-template-areas:"b" "s0" "s1"} .lzq-title h2{font-size:18px} .lzq-ctrl{gap:6px}.lzq-b{padding:0 10px;font-size:12px;height:34px}.lzq-top{padding:12px 14px} }
 @media (prefers-reduced-motion:reduce){ .pc{transition:none} .boom,.btag{animation:none} }
 `;
@@ -538,7 +547,7 @@ function build() {
   root$ = doc.createElement('div');
   root$.className = 'lzq'; root$.hidden = true;
   root$.setAttribute('role', 'dialog'); root$.setAttribute('aria-modal', 'true'); root$.setAttribute('aria-label', '孫武與拿破崙的陸軍棋對弈');
-  const side = (ps, k) => `<aside class="lzq-side s${k}"><header><span class="lzq-seal">${ps.seal}</span><div><b>${ps.name}</b><small>${k === 0 ? '紅方・先手' : '藍方・後手'}｜PCDA 2.0 心智模型</small></div></header>
+  const side = (ps, k) => `<aside class="lzq-side s${k}"><header><span class="lzq-face"><img src="${ps.img}" alt="${ps.name}肖像（AI 生成插畫）"><span class="lzq-seal">${ps.seal}</span></span><div><b>${ps.name}</b><small>${k === 0 ? '紅方・先手' : '藍方・後手'}｜PCDA 2.0 心智模型</small></div></header>
     <p class="lzq-motto">${ps.motto}</p>
     <ul class="lzq-models" data-models>${ps.models.map(m => `<li data-m="${m[0]}"><b>${m[0]}</b>${m[1]}</li>`).join('')}</ul>
     <div class="lzq-think" data-think><span class="k">等待開局</span><p class="l">${k === 0 ? '先算後動。布陣已定，靜待敵勢。' : '布陣完畢，主力已就位。'}</p></div>
@@ -668,6 +677,7 @@ function showThought(side, th) {
   box.querySelector('[data-think]').innerHTML = `<span class="k">${th.model}｜${(side === 0 ? SUN : NAP).models.find(m => m[0] === th.model)[1]}</span><p class="l">${th.line}</p>${tag}${th.calc ? `<p class="c">${th.calc}</p>` : ''}`;
 }
 
+function markTurn(){ [0,1].forEach(k => root$.querySelector('.s' + k).classList.toggle('turn', !!st && !st.over && st.turn === k)); }
 function step() {
   if (!st || st.over) return false;
   const side = st.turn;
@@ -675,7 +685,7 @@ function step() {
   if (!d) { st.over = true; st.winner = 1 - side; st.reason = '對手已無子可動'; finish(); return false; }
   const th = talk(st, side, d.info, d.move);
   const ev = play(st, d.move, th);
-  showThought(side, th); render(); fx(ev); logLine(ev);
+  showThought(side, th); render(); fx(ev); logLine(ev); markTurn();
   if (root.SFX) root.SFX.play(!ev.def ? 'move' : (ev.t === 'ZD' || ev.def.t === 'ZD' || (ev.def.t === 'DL' && ev.outcome === 'D')) ? 'boom' : 'clash');
   if (st.over) finish();
   return true;
@@ -714,7 +724,7 @@ function newMatch() {
   svg.querySelector('[data-hl]').innerHTML = ''; gFx.innerHTML = '';
   [0, 1].forEach(k => { const b = root$.querySelector('.s' + k); b.querySelector('[data-think]').innerHTML = `<span class="k">布陣完成</span><p class="l">${k === 0 ? '三雷護旗，主力居中靠後，工兵在前準備試探。' : '主力壓在' + (NAP.flank === 0 ? '本方右翼' : '本方左翼') + '鐵路線上，炸彈隨行，準備集中突破。'}</p><span class="tag">H3 棋局轉譯</span>`; b.querySelectorAll('[data-models] li').forEach(li => li.classList.remove('on')); });
   render(true);
-  setRunning(false);
+  setRunning(false); markTurn();
 }
 function onClick(e) {
   const b = e.target.closest('[data-act],[data-speed]'); if (!b) return;
