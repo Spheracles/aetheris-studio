@@ -42,3 +42,4 @@
 - `apple-touch-icon.png`、`icon-192.png`、`icon-512.png`、`site.webmanifest`：加到手機主畫面時使用的圖示與設定
 - `media/`：短影音企劃的角色設定圖（Markus A／B 造型、ANA 機器人）與測試影片
 - `luzhanqi.js`：陸軍棋對弈視窗。規則引擎、暗棋推理，以及依孫武與拿破崙兩份 PCDA 2.0 Skill 轉成參數的兩個 AI 棋手
+- `audio.js`：背景音樂與音效，用 Web Audio 即時合成，不需要音檔；預設關閉，右上角「聲音」按鈕開啟

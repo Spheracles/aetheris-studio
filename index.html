@@ -443,6 +443,7 @@ ol,ul{margin:0;padding:0;list-style:none}
     </button>
     <div class="loc" aria-live="polite"><span class="lbl">目前位置</span><span class="now" id="locNow"></span></div>
     <div class="ctrls">
+      <button class="tb-btn" type="button" id="btnSound" aria-pressed="false" aria-label="背景音樂與音效"><svg viewBox="0 0 16 16" aria-hidden="true" id="soundIco"><path d="M2.5 6h2.6L8.5 3v10L5.1 10H2.5z" fill="currentColor"/><path d="M11 5.5l3.5 5M14.5 5.5l-3.5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="t">聲音</span></button>
       <button class="tb-btn" type="button" id="btnHome" aria-label="回到全景"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 7.5 8 2.5l6 5M3.8 6.2V13.5h8.4V6.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="t">全景</span></button>
       <button class="tb-btn" type="button" id="btnAuto" aria-pressed="false" aria-label="自動導覽"><svg viewBox="0 0 16 16" aria-hidden="true" id="autoIco"><path d="M5 3.2v9.6L12.8 8z" fill="currentColor"/></svg><span class="t">自動導覽</span></button>
       <button class="tb-btn" type="button" id="btnFs" aria-label="全螢幕"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span class="t">全螢幕</span></button>
@@ -473,6 +474,7 @@ ol,ul{margin:0;padding:0;list-style:none}
   </div>
 </div>
 
+<script src="audio.js"></script>
 <script src="luzhanqi.js"></script>
 <script>
 (() => {
@@ -905,12 +907,14 @@ function go(i, opt = {}){
   updateDock();
   if (location.hash.slice(1) !== s.id && !opt.fromHash){ try { history.replaceState(null, '', '#' + s.id); } catch(e){} }
   const B = camFor(s), RB = rectFor(s);
+  if (prev >= 0 && !opt.dur) SND.play('whoosh');
   const dur = fly(B, RB, opt.dur, () => arrive(i)) || 0;
   panelTimer = setTimeout(() => showPanel(i), reduce ? 0 : Math.max(260, dur * (prev < 0 ? 0.55 : 0.62)));
 }
 function arrive(i){
   if (i !== cur) return;
   const s = STOPS[i];
+  if (seen.size > 1) SND.play('arrive');
   stage.style.setProperty('--k', (1 / camNow.s).toFixed(4));
   if (s.zone) frameEls[s.zone].classList.add('on');
   else {
@@ -972,6 +976,22 @@ function setClean(on){
 }
 document.addEventListener('click', e => { if (cleanMode){ e.preventDefault(); e.stopPropagation(); setClean(false); } }, true);
 document.addEventListener('keydown', e => { if (cleanMode){ e.preventDefault(); e.stopImmediatePropagation(); setClean(false); } }, true);
+
+/* ---------- sound ---------- */
+const SND = window.SFX || { play(){}, setOn(){ return false; }, on:false, wanted:false };
+function paintSound(){
+  const b = $('btnSound'), o = SND.on; b.setAttribute('aria-pressed', String(o));
+  b.querySelector('.t').textContent = o ? '聲音開' : '聲音';
+  $('soundIco').innerHTML = o ? '<path d="M2.5 6h2.6L8.5 3v10L5.1 10H2.5z" fill="currentColor"/><path d="M10.6 5.4a3.6 3.6 0 0 1 0 5.2M12.4 3.8a6 6 0 0 1 0 8.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' : '<path d="M2.5 6h2.6L8.5 3v10L5.1 10H2.5z" fill="currentColor"/><path d="M11 5.5l3.5 5M14.5 5.5l-3.5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>';
+}
+$('btnSound').addEventListener('click', e => { e.stopPropagation(); SND.setOn(!SND.on); paintSound(); SND.play('click'); });
+if (SND.wanted) document.addEventListener('pointerdown', function resume(e){ document.removeEventListener('pointerdown', resume, true); if (!SND.on && !e.target.closest('#btnSound')) { SND.setOn(true); paintSound(); } }, true);
+document.addEventListener('click', e => {
+  const t = e.target.closest('button, a'); if (!t || t.id === 'btnSound') return;
+  if (t.matches('[data-tab]')) SND.play('tab');
+  else if (t.matches('[data-lzq]')) SND.play('open');
+  else if (!t.matches('[data-go], .node, #prev, #next, #btnHome, #brand, .hit')) SND.play('click');
+}, true);
 
 /* ---------- events ---------- */
 document.addEventListener('click', e => {

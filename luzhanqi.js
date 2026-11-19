@@ -676,6 +676,7 @@ function step() {
   const th = talk(st, side, d.info, d.move);
   const ev = play(st, d.move, th);
   showThought(side, th); render(); fx(ev); logLine(ev);
+  if (root.SFX) root.SFX.play(!ev.def ? 'move' : (ev.t === 'ZD' || ev.def.t === 'ZD' || (ev.def.t === 'DL' && ev.outcome === 'D')) ? 'boom' : 'clash');
   if (st.over) finish();
   return true;
 }
@@ -702,6 +703,7 @@ function finish() {
   box.innerHTML = `<b>${who}</b><p>${st.reason}｜共 ${st.ply} 手｜剩餘棋子 孫武 ${alive(0)}・拿破崙 ${alive(1)}</p><button class="lzq-b pri" type="button" data-act="new">再下一局</button>`;
   box.hidden = false;
   setRunning(false);
+  if (root.SFX) root.SFX.play('win');
 }
 function newMatch() {
   clearTimeout(timer); running = false;
@@ -732,6 +734,7 @@ function open() {
   root$.querySelector('[data-act="play"]').focus();
 }
 function close() {
+  if (root.SFX) root.SFX.play('close');
   setRunning(false); root$.hidden = true; doc.documentElement.classList.remove('lzq-open');
   const t = doc.querySelector('[data-lzq]'); if (t) t.focus({ preventScroll: true });
 }
