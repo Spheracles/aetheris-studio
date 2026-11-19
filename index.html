@@ -269,7 +269,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 .closing em{font-style:normal;color:var(--amber)}
 
 /* ---------- dock ---------- */
-.dock{position:fixed;z-index:30;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:20px;background:rgba(9,15,32,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.4);max-width:calc(100% - 24px)}
+.dock{position:fixed;z-index:30;left:50%;bottom:14px;transform:translateX(-50%);width:max-content;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:20px;background:rgba(9,15,32,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.4);max-width:calc(100% - 24px)}
 .mini{position:relative;width:112px;height:63px;border-radius:10px;overflow:hidden;border:1px solid var(--line);padding:0;background:#000;cursor:pointer;flex:none}
 .mini img{width:100%;height:100%;display:block;opacity:.85}
 .mini-view{position:absolute;border:1.5px solid var(--amber);box-shadow:0 0 0 999px rgba(4,8,18,.35);border-radius:2px;pointer-events:none}
@@ -278,7 +278,8 @@ ol,ul{margin:0;padding:0;list-style:none}
 .nav:disabled{opacity:.35;cursor:default}
 .nav svg{width:18px;height:18px}
 .tl{display:flex;align-items:flex-end;gap:14px;padding:0 4px}
-.grp{display:flex;flex-direction:column;align-items:center;gap:4px}
+.grp{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none}
+.node,.grp-l{white-space:nowrap}
 .grp-l{font-size:11px;color:#8a95b2;letter-spacing:.08em;white-space:nowrap;transition:color .3s}
 .grp.cur .grp-l{color:var(--amber)}
 .nodes{position:relative;display:flex;gap:6px}
@@ -333,7 +334,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 .is-mobile .tb-btn{padding:0 10px;height:36px}
 .is-mobile .tl,.is-mobile .mini{display:none}
 .is-mobile .mcount{display:flex}
-.is-mobile .dock{left:8px;right:8px;transform:none;bottom:8px;max-width:none;padding:6px 8px;border-radius:16px}
+.is-mobile .dock{width:auto;left:8px;right:8px;transform:none;bottom:8px;max-width:none;padding:6px 8px;border-radius:16px}
 .is-mobile .band-grid{grid-template-columns:1fr;gap:16px}
 .is-mobile .chapters{grid-template-columns:repeat(2,1fr)}
 .is-mobile .stages{grid-template-columns:1fr;gap:12px}
