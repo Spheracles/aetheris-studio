@@ -547,7 +547,7 @@ function build() {
   root$ = doc.createElement('div');
   root$.className = 'lzq'; root$.hidden = true;
   root$.setAttribute('role', 'dialog'); root$.setAttribute('aria-modal', 'true'); root$.setAttribute('aria-label', '孫武與拿破崙的陸軍棋對弈');
-  const side = (ps, k) => `<aside class="lzq-side s${k}"><header><span class="lzq-face"><img src="${ps.img}" alt="${ps.name}肖像（AI 生成插畫）"><span class="lzq-seal">${ps.seal}</span></span><div><b>${ps.name}</b><small>${k === 0 ? '紅方・先手' : '藍方・後手'}｜PCDA 2.0 心智模型</small></div></header>
+  const side = (ps, k) => `<aside class="lzq-side s${k}"><header><span class="lzq-face"><img src="${ps.img}" alt="${ps.name}肖像（AI 生成插畫）"></span><div><b>${ps.name}</b><small>${k === 0 ? '紅方・先手' : '藍方・後手'}｜PCDA 2.0 心智模型</small></div></header>
     <p class="lzq-motto">${ps.motto}</p>
     <ul class="lzq-models" data-models>${ps.models.map(m => `<li data-m="${m[0]}"><b>${m[0]}</b>${m[1]}</li>`).join('')}</ul>
     <div class="lzq-think" data-think><span class="k">等待開局</span><p class="l">${k === 0 ? '先算後動。布陣已定，靜待敵勢。' : '布陣完畢，主力已就位。'}</p></div>
